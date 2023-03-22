@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import org.rangiffler.model.PhotoJson;
 import org.rangiffler.service.PhotoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -18,6 +19,7 @@ public class PhotoController {
 
   private final PhotoService photoService;
 
+  @Autowired
   public PhotoController(PhotoService photoService) {
     this.photoService = photoService;
   }

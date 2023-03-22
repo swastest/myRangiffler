@@ -2,6 +2,7 @@ package org.rangiffler.cors;
 
 import jakarta.annotation.Nonnull;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ public class CorsCustomizer {
 
   private final String rangifflerFrontUri;
 
+  @Autowired
   public CorsCustomizer(@Value("${rangiffler-front.base-uri}") String rangifflerFrontUri) {
     this.rangifflerFrontUri = rangifflerFrontUri;
   }
