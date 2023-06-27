@@ -111,6 +111,13 @@ model-классов, получить перформанс и простое н
 
 
 
+docker pull mysql:8.0.33
+
+docker run --name rangiffler-all -p 5432:5432 -e POSTGRES_PASSWORD=secret -v rangiffler_pgdata:/var/lib/postgresql/data -d postgres:15.1
+
+
+
+
 
 
 
