@@ -1,17 +1,12 @@
 server:
-  port: 9000
-  # ONLY FOR TESTING
-  servlet:
-    session:
-      cookie:
-        http-only: false
-        secure: false
+  port: 8089
+  error:
+    include:
+      message: true
 
 spring:
   application:
-    name: rangiffler-auth
-  mvc:
-    log-request-details: true
+    name: rangiffler-users
   datasource:
     hikari:
       connection-timeout: 20000
@@ -41,8 +36,6 @@ logging:
     org.springframework.web: DEBUG
     org.springframework.security: DEBUG
     org.springframework.security.oauth2: DEBUG
-    org.springframework.jdbc: DEBUG
-    org.hibernate: DEBUG
 #    org.springframework.boot.autoconfigure: DEBUG
 
 ---
@@ -51,26 +44,18 @@ spring:
     activate:
       on-profile: 'local'
   datasource:
-    url: jdbc:mysql://localhost:3306/rangiffler_auth?serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://localhost:3306/rangiffler_users?serverTimezone=UTC&useSSL=false
   jpa:
     hibernate:
       ddl-auto: validate
-rangiffler-front:
-  base-uri: 'http://127.0.0.1:3001'
-rangiffler-auth:
-  base-uri: 'http://127.0.0.1:9000'
 ---
 spring:
   config:
     activate:
       on-profile: 'docker'
   datasource:
-    url: 'jdbc:mysql://rangiffler-all-db:3306/rangiffler_auth'
+    url: jdbc:mysql://localhost:3306/rangiffler_users?serverTimezone=UTC&useSSL=false
   jpa:
     hibernate:
       ddl-auto: validate
-rangiffler-front:
-  base-uri: 'http://rangiffler-frontend'
-rangiffler-auth:
-  base-uri: 'http://rangiffler-auth:9000'
 ---
