@@ -33,7 +33,7 @@ public class UserJson {
   private String avatar;
 
   @JsonProperty("friendStatus")
-  private FriendStatus friendStatus;
+  private FriendStatus friendStatus = FriendStatus.NOT_FRIEND;
 
   public static UserJson fromEntity(UserEntity entity) {
     UserJson usr = new UserJson();

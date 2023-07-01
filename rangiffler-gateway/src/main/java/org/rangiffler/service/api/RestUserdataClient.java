@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 import java.net.URI;
 import java.util.List;
 
-//@Component
+@Component
 public class RestUserdataClient {
 
     private final WebClient webClient;
@@ -24,9 +24,9 @@ public class RestUserdataClient {
     private final String userdataUri;
 
 
- //   @Autowired
+    @Autowired
     public RestUserdataClient(WebClient webClient,
-                              @Value("${rangiffler-userdata.base-uri}") String userdataUri) {
+                              @Value("${rangiffler-users.base-uri}") String userdataUri) {
         this.webClient = webClient;
         this.userdataUri = userdataUri;
     }
@@ -36,7 +36,7 @@ public class RestUserdataClient {
     List<UserJson> getAllUsers(@Nonnull String username) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("username", username);
-        URI uri = UriComponentsBuilder.fromHttpUrl(userdataUri + "/users").queryParams(params).build().toUri();
+        URI uri = UriComponentsBuilder.fromHttpUrl(userdataUri + "/allUsers").queryParams(params).build().toUri();
 
         return webClient.get()
                 .uri(uri)
@@ -59,9 +59,9 @@ public class RestUserdataClient {
                 .block();
     }
 
+
     public @Nonnull
     List<UserJson> friends(@Nonnull String username) {
-
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("username", username);
         URI uri = UriComponentsBuilder.fromHttpUrl(userdataUri + "/friends").queryParams(params).build().toUri();
@@ -88,15 +88,15 @@ public class RestUserdataClient {
                 .block();
     }
 
-    public UserJson sendInvitation(@Nonnull String username,
-                                   @Nonnull UserJson friend) {
+    public UserJson addFriend(@Nonnull String username,
+                                   @Nonnull FriendJson friend) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("username", username);
-        URI uri = UriComponentsBuilder.fromHttpUrl(userdataUri + "/users/invite/").queryParams(params).build().toUri();
+        URI uri = UriComponentsBuilder.fromHttpUrl(userdataUri + "/addFriend").queryParams(params).build().toUri();
 
         return webClient.post()
                 .uri(uri)
-                .body(Mono.just(friend), UserJson.class)
+                .body(Mono.just(friend), FriendJson.class)
                 .retrieve()
                 .bodyToMono(UserJson.class)
                 .block();
@@ -107,8 +107,7 @@ public class RestUserdataClient {
                                 @Nonnull UserJson friend) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("username", username);
-//        params.add("friendUsername", friend.getUsername());
-        URI uri = UriComponentsBuilder.fromHttpUrl(userdataUri + "/friends/remove").queryParams(params).build().toUri();
+        URI uri = UriComponentsBuilder.fromHttpUrl(userdataUri + "/removeFriend").queryParams(params).build().toUri();
 
         return webClient.post()
                 .uri(uri)
@@ -123,7 +122,7 @@ public class RestUserdataClient {
                               @Nonnull UserJson friend) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("username", username);
-        URI uri = UriComponentsBuilder.fromHttpUrl(userdataUri + "/friends/submit").queryParams(params).build().toUri();
+        URI uri = UriComponentsBuilder.fromHttpUrl(userdataUri + "/acceptInvitation").queryParams(params).build().toUri();
 
         return webClient.post()
                 .uri(uri)
@@ -135,10 +134,10 @@ public class RestUserdataClient {
 
     public @Nonnull
     UserJson declineInvitation(@Nonnull String username,
-                               @Nonnull FriendJson invitation) {
+                               @Nonnull UserJson invitation) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("username", username);
-        URI uri = UriComponentsBuilder.fromHttpUrl(userdataUri + "/friends/decline").queryParams(params).build().toUri();
+        URI uri = UriComponentsBuilder.fromHttpUrl(userdataUri + "/declineInvitation").queryParams(params).build().toUri();
 
         return webClient.post()
                 .uri(uri)
@@ -151,7 +150,7 @@ public class RestUserdataClient {
     public @Nonnull
     UserJson updateUserInfo(UserJson user) {
         return webClient.patch()
-                .uri(userdataUri + "/currentUser")
+                .uri(userdataUri + "/updateUserInfo")
                 .body(Mono.just(user), UserJson.class)
                 .retrieve()
                 .bodyToMono(UserJson.class)
