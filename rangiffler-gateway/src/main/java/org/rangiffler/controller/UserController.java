@@ -1,68 +1,48 @@
 package org.rangiffler.controller;
 
-import java.util.List;
 import org.rangiffler.model.UserJson;
-import org.rangiffler.service.UserService;
+import org.rangiffler.service.api.RestUserdataClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 
 @RestController
 public class UserController {
 
-  private final UserService userService;
+    private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
-  @Autowired
-  public UserController(UserService userService) {
-    this.userService = userService;
-  }
+    private final RestUserdataClient userDataClient;
 
-  @GetMapping("/users")
-  public List<UserJson> getAllUsers() {
-    return userService.getAllUsers();
-  }
+    @Autowired
+    public UserController(RestUserdataClient userDataClient) {
+        this.userDataClient = userDataClient;
+    }
 
-  @GetMapping("/currentUser")
-  public UserJson getCurrentUser() {
-    return userService.getCurrentUser();
-  }
+    @PatchMapping("/currentUser")
+    public UserJson updateUserInfo(@AuthenticationPrincipal Jwt principal,
+                                   @Validated @RequestBody UserJson user) {
+        String username = principal.getClaim("sub");
+        user.setUsername(username);
+        return userDataClient.updateUserInfo(user);
+    }
 
-  @PatchMapping("/currentUser")
-  public UserJson updateCurrentUser(@RequestBody UserJson user) {
-    return userService.updateCurrentUser(user);
-  }
+    @GetMapping("/currentUser")
+    public UserJson currentUser(@AuthenticationPrincipal Jwt principal) {
+        String username = principal.getClaim("sub");
+        return userDataClient.currentUser(username);
+    }
 
-  @GetMapping("/friends")
-  public List<UserJson> getFriendsByUserId() {
-    return userService.getFriends();
-  }
-
-  @GetMapping("invitations")
-  public List<UserJson> getInvitations() {
-    return userService.getInvitations();
-  }
-
-  @PostMapping("users/invite/")
-  public UserJson sendInvitation(@RequestBody UserJson user) {
-    return userService.sendInvitation(user);
-  }
-
-  @PostMapping("friends/remove")
-  public UserJson removeFriendFromUser(@RequestBody UserJson friend) {
-    return userService.removeUserFromFriends(friend);
-  }
-
-  @PostMapping("friends/submit")
-  public UserJson submitFriend(@RequestBody UserJson friend) {
-    return userService.acceptInvitation(friend);
-  }
-
-  @PostMapping("friends/decline")
-  public UserJson declineFriend(@RequestBody UserJson friend) {
-    return userService.declineInvitation(friend);
-  }
-
+    @GetMapping("/users")
+    public List<UserJson> allUsers(@AuthenticationPrincipal Jwt principal) {
+        String username = principal.getClaim("sub");
+        return userDataClient.getAllUsers(username);
+    }
 }
