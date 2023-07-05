@@ -1,6 +1,6 @@
-package org.rangiffler.rangifflerusers.data.repository;
+package org.rangiffler.data.repository;
 
-import org.rangiffler.rangifflerusers.data.FriendsEntity;
+import org.rangiffler.data.FriendsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

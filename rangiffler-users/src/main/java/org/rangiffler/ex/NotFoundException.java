@@ -1,4 +1,4 @@
-package org.rangiffler.rangifflerusers.ex;
+package org.rangiffler.ex;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

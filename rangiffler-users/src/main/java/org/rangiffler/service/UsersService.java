@@ -1,14 +1,13 @@
-package org.rangiffler.rangifflerusers.service;
+package org.rangiffler.service;
 
 import jakarta.annotation.Nonnull;
-import org.apache.catalina.User;
-import org.rangiffler.rangifflerusers.data.FriendsEntity;
-import org.rangiffler.rangifflerusers.data.UserEntity;
-import org.rangiffler.rangifflerusers.data.repository.UserRepository;
-import org.rangiffler.rangifflerusers.ex.NotFoundException;
-import org.rangiffler.rangifflerusers.model.FriendJson;
-import org.rangiffler.rangifflerusers.model.FriendStatus;
-import org.rangiffler.rangifflerusers.model.UserJson;
+import org.rangiffler.data.FriendsEntity;
+import org.rangiffler.data.UserEntity;
+import org.rangiffler.data.repository.UserRepository;
+import org.rangiffler.ex.NotFoundException;
+import org.rangiffler.model.FriendStatus;
+import org.rangiffler.model.UserJson;
+import org.rangiffler.model.FriendJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

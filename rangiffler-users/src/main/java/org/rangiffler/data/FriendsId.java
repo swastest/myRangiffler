@@ -1,4 +1,4 @@
-package org.rangiffler.rangifflerusers.data;
+package org.rangiffler.data;
 
 import lombok.Data;
 

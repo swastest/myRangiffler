@@ -1,15 +1,16 @@
 server:
-  port: 9000
-  # ONLY FOR TESTING
-  servlet:
-    session:
-      cookie:
-        http-only: false
-        secure: false
+  port: 8091
+  error:
+    include:
+      message: true
+
+grpc:
+  server:
+    port: 8092
 
 spring:
   application:
-    name: rangiffler-auth
+    name: rangiffler-geo
   mvc:
     log-request-details: true
   datasource:
@@ -41,36 +42,27 @@ logging:
     org.springframework.web: DEBUG
     org.springframework.security: DEBUG
     org.springframework.security.oauth2: DEBUG
-    org.springframework.jdbc: DEBUG
-    org.hibernate: DEBUG
 #    org.springframework.boot.autoconfigure: DEBUG
-
 ---
 spring:
   config:
     activate:
       on-profile: 'local'
   datasource:
-    url: jdbc:mysql://localhost:3306/rangiffler_auth?serverTimezone=UTC&useSSL=false&createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/rangiffler_geo?serverTimezone=UTC&useSSL=false&createDatabaseIfNotExist=true
   jpa:
     hibernate:
       ddl-auto: validate
-rangiffler-front:
-  base-uri: 'http://127.0.0.1:3001'
-rangiffler-auth:
-  base-uri: 'http://127.0.0.1:9000'
+
 ---
 spring:
   config:
     activate:
       on-profile: 'docker'
   datasource:
-    url: 'jdbc:mysql://rangiffler-all-db:3306/rangiffler_auth'
+    url: jdbc:mysql://localhost:3306/rangiffler_geo?serverTimezone=UTC&useSSL=false&createDatabaseIfNotExist=true
   jpa:
     hibernate:
       ddl-auto: validate
-rangiffler-front:
-  base-uri: 'http://rangiffler-frontend'
-rangiffler-auth:
-  base-uri: 'http://rangiffler-auth:9000'
----
+
+

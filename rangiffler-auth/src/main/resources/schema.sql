@@ -1,4 +1,4 @@
--- create database `rangiffler_auth`;
+create database if not exists `rangiffler_auth`;
 USE `rangiffler_auth`;
 create table if not exists users
 (
