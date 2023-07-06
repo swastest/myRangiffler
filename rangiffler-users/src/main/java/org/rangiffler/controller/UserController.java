@@ -1,7 +1,7 @@
-package org.rangiffler.rangifflerusers.controller;
+package org.rangiffler.controller;
 
-import org.rangiffler.rangifflerusers.model.UserJson;
-import org.rangiffler.rangifflerusers.service.UsersService;
+import org.rangiffler.model.UserJson;
+import org.rangiffler.service.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

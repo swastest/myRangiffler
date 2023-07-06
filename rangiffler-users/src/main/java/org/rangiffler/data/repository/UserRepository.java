@@ -1,8 +1,8 @@
-package org.rangiffler.rangifflerusers.data.repository;
+package org.rangiffler.data.repository;
 
 
 import jakarta.annotation.Nullable;
-import org.rangiffler.rangifflerusers.data.UserEntity;
+import org.rangiffler.data.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

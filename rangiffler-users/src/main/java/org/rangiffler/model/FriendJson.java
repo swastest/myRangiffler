@@ -1,4 +1,4 @@
-package org.rangiffler.rangifflerusers.model;
+package org.rangiffler.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

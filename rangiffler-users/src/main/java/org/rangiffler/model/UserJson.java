@@ -1,4 +1,4 @@
-package org.rangiffler.rangifflerusers.model;
+package org.rangiffler.model;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.rangiffler.rangifflerusers.data.UserEntity;
+import org.rangiffler.data.UserEntity;
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;

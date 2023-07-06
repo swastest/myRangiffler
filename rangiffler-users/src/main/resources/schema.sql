@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS rangiffler_users;
+CREATE DATABASE IF NOT EXISTS `rangiffler_users`;
 USE `rangiffler_users`;
 
 CREATE TABLE IF NOT EXISTS users (
