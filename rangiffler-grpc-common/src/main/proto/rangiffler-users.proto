@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+import "rangiffler-photo.proto";
+package guru.qa.grpc.rangiffler.grpc;
+
+option java_multiple_files = true;
+option java_package = "guru.qa.grpc.rangiffler.grpc";
+option java_outer_classname = "RangifflerUsersProto";
+
+service RangifflerUsersService {
+  rpc GetAllFriends(UsernameRequest) returns (Users) {}
+}
+
+message User {
+  string id = 1;
+  string username = 2;
+  string firstname = 3;
+  string lastname = 4;
+  string avatar = 5;
+}
+
+message Users {
+  repeated User users = 1;
+}

@@ -23,6 +23,8 @@ repositories {
 }
 
 dependencies {
+    implementation project(':rangiffler-grpc-common')
+    implementation 'net.devh:grpc-server-spring-boot-starter:2.14.0.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'

@@ -1,11 +1,12 @@
 package org.rangiffler.service.api;
 
 import com.google.protobuf.Empty;
+import guru.qa.grpc.rangiffler.grpc.Country;
+import guru.qa.grpc.rangiffler.grpc.CountryByCodeRequest;
 import guru.qa.grpc.rangiffler.grpc.RangifflerCountriesServiceGrpc;
 import io.grpc.StatusRuntimeException;
 import jakarta.annotation.Nonnull;
 import net.devh.boot.grpc.client.inject.GrpcClient;
-import org.rangiffler.model.CountryJson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -24,16 +25,7 @@ public class GrpcGeoClient {
     @GrpcClient("grpcCountriesClient")
     private RangifflerCountriesServiceGrpc.RangifflerCountriesServiceBlockingStub rangifflerCountriesServiceStub;
 
-    public @Nonnull
-    List<CountryJson> getAllCountries() {
-
-        try {
-            return rangifflerCountriesServiceStub.getCountries(EMPTY).getAllCountriesList()
-                    .stream().map(CountryJson::convertFromGrpc)
-                    .collect(Collectors.toList());
-        } catch (StatusRuntimeException e) {
-            LOG.error("### Error while calling gRPC server ", e);
-            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "The gRPC operation was cancelled", e);
-        }
+    public Country getCountryByCode(CountryByCodeRequest request) {
+        return  rangifflerCountriesServiceStub.getCountriesByCode(request);
     }
 }
