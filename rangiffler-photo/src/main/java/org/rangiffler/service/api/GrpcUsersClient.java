@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GrpcUsersClient {
-    private static final Logger LOG = LoggerFactory.getLogger(GrpcGeoClient.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GrpcCountriesClient.class);
     private static final Empty EMPTY = Empty.getDefaultInstance();
 
     @GrpcClient("grpcUsersClient")

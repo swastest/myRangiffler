@@ -6,14 +6,13 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.rangiffler.data.PhotoEntity;
 import org.rangiffler.data.repository.PhotoRepository;
-import org.rangiffler.service.api.GrpcGeoClient;
+import org.rangiffler.service.api.GrpcCountriesClient;
 import org.rangiffler.service.api.GrpcUsersClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,13 +20,13 @@ import java.util.UUID;
 public class GrpcPhotoService extends RangifflerPhotoServiceGrpc.RangifflerPhotoServiceImplBase {
     private static final Logger LOG = LoggerFactory.getLogger(GrpcPhotoService.class);
     private final PhotoRepository photoRepository;
-    private final GrpcGeoClient grpcGeoClient;
+    private final GrpcCountriesClient grpcCountriesClient;
     private final GrpcUsersClient grpcUsersClient;
 
     @Autowired
-    public GrpcPhotoService(PhotoRepository photoRepository, GrpcGeoClient grpcGeoClient, GrpcUsersClient grpcUsersClient) {
+    public GrpcPhotoService(PhotoRepository photoRepository, GrpcCountriesClient grpcCountriesClient, GrpcUsersClient grpcUsersClient) {
         this.photoRepository = photoRepository;
-        this.grpcGeoClient = grpcGeoClient;
+        this.grpcCountriesClient = grpcCountriesClient;
         this.grpcUsersClient = grpcUsersClient;
     }
 
@@ -82,6 +81,7 @@ public class GrpcPhotoService extends RangifflerPhotoServiceGrpc.RangifflerPhoto
         if (allPhotosByUsername.size() > 0) {
             for (PhotoEntity photoEntity : allPhotosByUsername) {
                 Photo.Builder photoBuilder = Photo.newBuilder()
+                        .setId(photoEntity.getId().toString())
                         .setPhoto(new String(photoEntity.getPhoto(), StandardCharsets.UTF_8))
                         .setCountry(getCountryInfoByCode(photoEntity.getCountryCode()))
                         .setDescription(photoEntity.getDescription())
@@ -99,11 +99,12 @@ public class GrpcPhotoService extends RangifflerPhotoServiceGrpc.RangifflerPhoto
         UsernameRequest requestUsername = UsernameRequest.newBuilder().setUsername(request.getUsername()).build();
         Users allFriends = grpcUsersClient.getAllFriends(requestUsername);
         List<String> friendsNames = allFriends.getUsersList().stream().map(u -> u.getUsername()).toList();
-            List<PhotoEntity> friendsPhotosEntity = photoRepository.findAllByUsernameIn(friendsNames);
+        List<PhotoEntity> friendsPhotosEntity = photoRepository.findAllByUsernameIn(friendsNames);
         Photos.Builder builderAllPhoto = Photos.newBuilder();
         if (friendsPhotosEntity.size() > 0) {
             for (PhotoEntity photoEntity : friendsPhotosEntity) {
                 Photo.Builder photoBuilder = Photo.newBuilder()
+                        .setId(photoEntity.getId().toString())
                         .setPhoto(new String(photoEntity.getPhoto(), StandardCharsets.UTF_8))
                         .setCountry(getCountryInfoByCode(photoEntity.getCountryCode()))
                         .setDescription(photoEntity.getDescription())
@@ -120,6 +121,6 @@ public class GrpcPhotoService extends RangifflerPhotoServiceGrpc.RangifflerPhoto
         CountryByCodeRequest request = CountryByCodeRequest.newBuilder()
                 .setCode(code)
                 .build();
-        return grpcGeoClient.getCountryByCode(request);
+        return grpcCountriesClient.getCountryByCode(request);
     }
 }

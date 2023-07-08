@@ -5,6 +5,7 @@ import guru.qa.grpc.rangiffler.grpc.User;
 import guru.qa.grpc.rangiffler.grpc.UsernameRequest;
 import guru.qa.grpc.rangiffler.grpc.Users;
 import io.grpc.stub.StreamObserver;
+import jakarta.transaction.Transactional;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.rangiffler.data.UserEntity;
 import org.rangiffler.data.repository.UserRepository;
@@ -25,6 +26,7 @@ public class GrpcUsersService extends RangifflerUsersServiceGrpc.RangifflerUsers
     }
 
     @Override
+    @Transactional
     public void getAllFriends(UsernameRequest request, StreamObserver<Users> responseObserver) {
         UserEntity userEntity = userRepository.findByUsername(request.getUsername());
         if (userEntity == null) {

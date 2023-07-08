@@ -11,7 +11,6 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class CountryJson {
 
     @JsonProperty("id")
@@ -24,7 +23,12 @@ public class CountryJson {
     private String name;
 
     public static CountryJson convertFromGrpc(Country countryGrpc) {
-        return new CountryJson(UUID.fromString(countryGrpc.getUuid()), countryGrpc.getCode(), countryGrpc.getName());
+        String uuidString = countryGrpc.getUuid();
+        UUID uuid = null;
+        if (uuidString != null && !uuidString.isEmpty()) {
+            uuid = UUID.fromString(uuidString);
+        }
+        return new CountryJson(uuid, countryGrpc.getCode(), countryGrpc.getName());
     }
 
     public Country convertToGrpc() {

@@ -31,15 +31,15 @@ grpc:
     grpcCountriesClient:
       address: 'static://127.0.0.1:8092'
       negotiationType: PLAINTEXT
-#    grpcPhotosClient:
-#      address: 'static://127.0.0.1:8094'
-#      negotiationType: PLAINTEXT
+    grpcPhotoClient:
+      address: 'static://127.0.0.1:8094'
+      negotiationType: PLAINTEXT
 
 rangiffler-geo:
   base-uri: 'http://127.0.0.1:8091'
 
-#rangiffler-photo:
-#  base-uri: 'http://127.0.0.1:8093'
+rangiffler-photo:
+  base-uri: 'http://127.0.0.1:8093'
 
 rangiffler-front:
   base-uri: 'http://127.0.0.1:3001'
