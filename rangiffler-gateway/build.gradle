@@ -29,16 +29,14 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
     implementation 'org.junit.jupiter:junit-jupiter:5.9.2'
 }
-//docker {
-//    dependsOn build
-//    name "swastest/rangiffler-userdata:${project.version}"
-//    tag 'latest', 'swastest/rangiffler-userdata:latest'
-//    files bootJar.archiveFile
-//    buildArgs([
-//            APP_VER: project.version
-//    ])
-//    noCache true
-//}
+docker {
+    dependsOn build
+    name "swastest/rangiffler-gateway:${project.version}"
+    tag 'latest', 'swastest/rangiffler-gateway:latest'
+    files bootJar.archiveFile
+    buildArgs([APP_VER: project.version, DOCKER: project.ext.dockerImage])
+    noCache true
+}
 
 task dockerRmi(type: Exec) {
     workingDir "${buildDir}"

@@ -10,12 +10,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 @Component
-public class NifflerUserDetailsService implements UserDetailsService {
+public class RangifflerUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
     @Autowired
-    public NifflerUserDetailsService(UserRepository userRepository) {
+    public RangifflerUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
