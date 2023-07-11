@@ -46,7 +46,7 @@ public class GrpcCountryService extends RangifflerCountriesServiceGrpc.Rangiffle
         CountryEntity countryEntity = countryRepository.findByCode(request.getCode());
 
         Country response = Country.newBuilder()
-                .setUuid(countryEntity.getCode())
+                .setUuid(countryEntity.getId().toString())
                 .setName(countryEntity.getName())
                 .setCode(countryEntity.getCode())
                 .build();

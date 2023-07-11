@@ -29,7 +29,7 @@ public class GrpcGeoClient {
 
         try {
             return rangifflerCountriesServiceStub.getCountries(EMPTY).getAllCountriesList()
-                    .stream().map(CountryJson::fromGrpcMessage)
+                    .stream().map(CountryJson::convertFromGrpc)
                     .collect(Collectors.toList());
         } catch (StatusRuntimeException e) {
             LOG.error("### Error while calling gRPC server ", e);
