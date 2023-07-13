@@ -1,19 +1,118 @@
-version: '3'
+version: '3.9'
 services:
-  mysql:
+  rangiffler-all-db:
     image: mysql:latest
-    container_name: rangiffler-mysql
+    container_name: rangiffler-all-db
     ports:
       - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=secret
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 3s
+      retries: 5
+      interval: 3s
     volumes:
       - rangiffler_mysql_data:/var/lib/mysql
+    restart: always
     networks:
       - rangiffler-network
+    dns_search: .
+
+  auth.rangiffler.dc:
+    container_name: auth.rangiffler.dc
+    image: swastest/rangiffler-auth:latest
+    ports:
+      - "9000:9000"
+    healthcheck:
+      test: "wget --spider http://localhost:9000/actuator/health || exit 1"
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: always
+    depends_on:
+      rangiffler-all-db:
+        condition: service_healthy
+    networks:
+      - rangiffler-network
+    dns_search: .
+
+  gateway.rangiffler.dc:
+    container_name: gateway.rangiffler.dc
+    image: swastest/rangiffler-gateway:latest
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: "wget --spider http://localhost:8080/actuator/health || exit 1"
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: always
+    depends_on:
+      - auth.rangiffler.dc
+    networks:
+      - rangiffler-network
+    dns_search: .
+
+  users.rangiffler.dc:
+    container_name: users.rangiffler.dc
+    image: swastest/niffler-users:latest
+    expose:
+      - "8089"
+      - "8090"
+    restart: always
+    depends_on:
+      rangiffler-all-db:
+        condition: service_healthy
+    networks:
+      - rangiffler-network
+    dns_search: .
+
+  geo.rangiffler.dc:
+    container_name: geo.rangiffler.dc
+    image: swastest/rangiffler-geo:latest
+    expose:
+      - "8091"
+      - "8092"
+    restart: always
+    depends_on:
+      rangiffler-all-db:
+        condition: service_healthy
+    networks:
+      - rangiffler-network
+    dns_search: .
+
+  photo.rangiffler.dc:
+    container_name: photo.rangiffler.dc
+    image: swastest/rangiffler-photo:latest
+    expose:
+      - "8093"
+      - "8094"
+    restart: always
+    depends_on:
+      rangiffler-all-db:
+        condition: service_healthy
+    networks:
+      - rangiffler-network
+    dns_search: .
+
+  frontend.rangiffler.dc:
+    container_name: frontend.rangiffler.dc
+    image: swastest/rangiffler-frontend:latest
+    ports:
+      - "80:80"
+    restart: always
+    depends_on:
+      gateway.rangiffler.dc:
+        condition: service_healthy
+    networks:
+      - rangiffler-network
+    dns_search: .
 
 volumes:
   rangiffler_mysql_data:
+    external: true
 
 networks:
   rangiffler-network:
+    driver: bridge
