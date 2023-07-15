@@ -50,15 +50,15 @@ spring:
     url: jdbc:mysql://localhost:3306/rangiffler_users?serverTimezone=UTC&useSSL=false&createDatabaseIfNotExist=true
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
 ---
 spring:
   config:
     activate:
       on-profile: 'docker'
   datasource:
-    url: jdbc:mysql://localhost:3306/rangiffler_users?serverTimezone=UTC&useSSL=false&createDatabaseIfNotExist=true
+    url: jdbc:mysql://rangiffler-all-db:3306/rangiffler_users?serverTimezone=UTC&useSSL=false&createDatabaseIfNotExist=true
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
 ---

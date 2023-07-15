@@ -50,11 +50,11 @@ spring:
     url: jdbc:mysql://localhost:3306/rangiffler_photo?serverTimezone=UTC&useSSL=false&createDatabaseIfNotExist=true
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
 grpc:
   client:
     grpcUsersClient:
-      address: 'static://localhost:8090'
+      address: 'static://127.0.0.1:8090'
       negotiationType: PLAINTEXT
     grpcCountriesClient:
       address: 'static://127.0.0.1:8092'
@@ -65,10 +65,19 @@ spring:
     activate:
       on-profile: 'docker'
   datasource:
-    url: jdbc:mysql://localhost:3306/rangiffler_photo?serverTimezone=UTC&useSSL=false&createDatabaseIfNotExist=true
+    url: jdbc:mysql://rangiffler-all-db:3306/rangiffler_photo?serverTimezone=UTC&useSSL=false&createDatabaseIfNotExist=true
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
+
+grpc:
+  client:
+    grpcCountriesClient:
+      address: 'static://geo.rangiffler.dc:8092'
+      negotiationType: PLAINTEXT
+    grpcUsersClient:
+      address: 'static://users.rangiffler.dc:8090'
+      negotiationType: PLAINTEXT
 ---
 
 
