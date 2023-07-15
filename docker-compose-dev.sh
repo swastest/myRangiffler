@@ -23,8 +23,7 @@ if [ "$1" = "push" ] || [ "$2" = "push" ]; then
   bash ./docker-build.sh dev push
 else
   echo "### Build images (front: $front) ###"
-  bash ./gradlew clean build dockerTagLatest
-#  -x :rangiffler-e-2-e-tests:test
+  bash ./gradlew clean build dockerTagLatest -x :rangiffler-e-2-e-tests:test
   cd "$front" || exit
   bash ./docker-build.sh dev
 fi

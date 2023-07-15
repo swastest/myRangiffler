@@ -46,9 +46,9 @@ public class GrpcUsersService extends RangifflerUsersServiceGrpc.RangifflerUsers
             User.Builder userBuilder = User.newBuilder()
                     .setId(friend.getId().toString())
                     .setUsername(friend.getUsername())
-                    .setFirstname(friend.getFirstname())
-                    .setLastname(friend.getLastname())
-                    .setAvatar(friend.getAvatar());
+                    .setFirstname(friend.getFirstname()==null? "" : friend.getFirstname())
+                    .setLastname(friend.getLastname()==null? "" : friend.getLastname())
+                    .setAvatar(friend.getAvatar()==null? "" : friend.getAvatar());
 
             usersBuilder.addUsers(userBuilder.build());
         }

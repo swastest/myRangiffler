@@ -104,7 +104,7 @@ services:
     restart: always
     depends_on:
       gateway.rangiffler.dc:
-        condition: service_healthy
+        condition: service_started
     networks:
       - rangiffler-network
     dns_search: .
