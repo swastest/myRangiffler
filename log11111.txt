@@ -2031,3 +2031,218 @@ openjdk                              17-jdk           4717374ea615   14 months a
  ⠿ photo.rangiffler.dc Error                                                                                                                                                    2.6s
 Error response from daemon: manifest for swastest/niffler-users:latest not found: manifest unknown: manifest unknown
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+tatikzk@MacBook-Pro-Tatyana rangiffler % ./gradlew :rangiffler-photo  clean build dockerPush
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Cannot locate tasks that match ':rangiffler-photo' as task 'rangiffler-photo' not found in root project 'rangiffler'.
+
+* Try:
+> Run gradlew tasks to get a list of available tasks.
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 441ms
+tatikzk@MacBook-Pro-Tatyana rangiffler % ./gradlew :rangiffler-photo clean build dockerTagLatesth
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Cannot locate tasks that match ':rangiffler-photo' as task 'rangiffler-photo' not found in root project 'rangiffler'.
+
+* Try:
+> Run gradlew tasks to get a list of available tasks.
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 384ms
+tatikzk@MacBook-Pro-Tatyana rangiffler % ./gradlew :rangiffler-photo: clean build dockerTagLatesth
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Cannot locate tasks that match ':rangiffler-photo:'. The path should not include an empty segment (try ':rangiffler-photo' instead).
+
+* Try:
+> Run gradlew tasks to get a list of available tasks.
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 385ms
+tatikzk@MacBook-Pro-Tatyana rangiffler % ./gradlew :rangiffler-photo:clean build dockerTagLatesth
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Task 'dockerTagLatesth' not found in root project 'rangiffler' and its subprojects. Some candidates are: 'dockerTagLatest'.
+
+* Try:
+> Run gradlew tasks to get a list of available tasks.
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 401ms
+tatikzk@MacBook-Pro-Tatyana rangiffler % ./gradlew :rangiffler-photo:clean build dockerTagLatesth -x :rangiffler-e-2-e-tests:test
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Task 'dockerTagLatesth' not found in root project 'rangiffler' and its subprojects. Some candidates are: 'dockerTagLatest'.
+
+* Try:
+> Run gradlew tasks to get a list of available tasks.
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 529ms
+tatikzk@MacBook-Pro-Tatyana rangiffler % ./gradlew :rangiffler-photo:clean build dockerTagLatest -x :rangiffler-e-2-e-tests:test
+
+> Task :rangiffler-users:test FAILED
+
+RangifflerUsersApplicationTests > contextLoads() FAILED
+    java.lang.IllegalStateException at DefaultCacheAwareContextLoaderDelegate.java:142
+        Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException at ConstructorResolver.java:798
+            Caused by: org.springframework.beans.factory.BeanCreationException at ConstructorResolver.java:657
+                Caused by: org.springframework.beans.BeanInstantiationException at SimpleInstantiationStrategy.java:171
+                    Caused by: org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException at DataSourceProperties.java:182
+
+1 test completed, 1 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':rangiffler-users:test'.
+> There were failing tests. See the report at: file:///Users/tatikzk/IdeaProjects/rangiffler/rangiffler-users/build/reports/tests/test/index.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 3s
+51 actionable tasks: 15 executed, 36 up-to-date
+tatikzk@MacBook-Pro-Tatyana rangiffler % docker images
+REPOSITORY                           TAG              IMAGE ID       CREATED          SIZE
+swastest/rangiffler-front            0.0.3-SNAPSHOT   8b15ff4508d3   56 minutes ago   44.7MB
+swastest/rangiffler-front            latest           8b15ff4508d3   56 minutes ago   44.7MB
+<none>                               <none>           7493b9b65116   5 days ago       1.26GB
+nikolaikpython-nodejs_dist           latest           fd9741d0af34   5 days ago       1.75GB
+nikolaik/python-nodejs               latest           423aadb649b6   2 weeks ago      1.26GB
+dtuchs/niffler-e-2-e-tests           0.0.4-SNAPSHOT   92aeff7d336b   3 weeks ago      469MB
+dtuchs/niffler-e-2-e-tests           latest           92aeff7d336b   3 weeks ago      469MB
+dtuchs/niffler-userdata              0.0.4-SNAPSHOT   8f2e7410923a   3 weeks ago      313MB
+dtuchs/niffler-userdata              latest           8f2e7410923a   3 weeks ago      313MB
+dtuchs/niffler-spend                 0.0.4-SNAPSHOT   6eca6bac6482   3 weeks ago      328MB
+dtuchs/niffler-spend                 latest           6eca6bac6482   3 weeks ago      328MB
+dtuchs/niffler-auth                  0.0.4-SNAPSHOT   83c1631eab97   3 weeks ago      321MB
+dtuchs/niffler-auth                  latest           83c1631eab97   3 weeks ago      321MB
+dtuchs/niffler-frontend-test         0.0.4-SNAPSHOT   80035690c4cc   4 weeks ago      53MB
+dtuchs/niffler-frontend-test         latest           80035690c4cc   4 weeks ago      53MB
+mysql                                latest           1732fe3340d5   4 weeks ago      587MB
+selenoid/firefox                     114.0            dbe78dc2ba24   4 weeks ago      1.2GB
+<none>                               <none>           09adad852d1d   5 weeks ago      501MB
+mysql                                8.0.33           b3077e10c878   6 weeks ago      592MB
+aerokube/selenoid                    1.10.12          10d29a07e1df   7 weeks ago      17.3MB
+postgres                             14.7-alpine      d9f0e6213b18   3 months ago     240MB
+frankescobar/allure-docker-service   latest           43c1dc75a96a   4 months ago     449MB
+confluentinc/cp-kafka                7.3.2            a7073da97a1f   5 months ago     853MB
+confluentinc/cp-zookeeper            7.3.2            c43998763eb6   5 months ago     853MB
+aerokube/selenoid                    1.10.10          11319998473d   5 months ago     17MB
+selenoid/vnc_chrome                  110.0            d46bff42fdc1   5 months ago     1.2GB
+postgres                             15.1             202696d29757   5 months ago     360MB
+aerokube/selenoid-ui                 1.10.9           45d822c2c8f0   6 months ago     17.6MB
+adven27/grpc-wiremock                latest           ba314d0f6573   7 months ago     926MB
+wiremock/wiremock                    2.35.0           415d2761a32b   8 months ago     252MB
+sskorol/selenoid_chromium_vnc        100.0            b72c70402035   14 months ago    866MB
+openjdk                              17-jdk           4717374ea615   14 months ago    501MB
+tatikzk@MacBook-Pro-Tatyana rangiffler % >....
+tatikzk@MacBook-Pro-Tatyana rangiffler % >....
+swastest/rangiffler-front            latest           8b15ff4508d3   56 minutes ago   44.7MB
+<none>                               <none>           7493b9b65116   5 days ago       1.26GB
+nikolaikpython-nodejs_dist           latest           fd9741d0af34   5 days ago       1.75GB
+nikolaik/python-nodejs               latest           423aadb649b6   2 weeks ago      1.26GB
+dtuchs/niffler-e-2-e-tests           0.0.4-SNAPSHOT   92aeff7d336b   3 weeks ago      469MB
+dtuchs/niffler-e-2-e-tests           latest           92aeff7d336b   3 weeks ago      469MB
+dtuchs/niffler-userdata              0.0.4-SNAPSHOT   8f2e7410923a   3 weeks ago      313MB
+dtuchs/niffler-userdata              latest           8f2e7410923a   3 weeks ago      313MB
+dtuchs/niffler-spend                 0.0.4-SNAPSHOT   6eca6bac6482   3 weeks ago      328MB
+dtuchs/niffler-spend                 latest           6eca6bac6482   3 weeks ago      328MB
+dtuchs/niffler-auth                  0.0.4-SNAPSHOT   83c1631eab97   3 weeks ago      321MB
+dtuchs/niffler-auth                  latest           83c1631eab97   3 weeks ago      321MB
+dtuchs/niffler-frontend-test         0.0.4-SNAPSHOT   80035690c4cc   4 weeks ago      53MB
+dtuchs/niffler-frontend-test         latest           80035690c4cc   4 weeks ago      53MB
+mysql                                latest           1732fe3340d5   4 weeks ago      587MB
+selenoid/firefox                     114.0            dbe78dc2ba24   4 weeks ago      1.2GB
+<none>                               <none>           09adad852d1d   5 weeks ago      501MB
+mysql                                8.0.33           b3077e10c878   6 weeks ago      592MB
+aerokube/selenoid                    1.10.12          10d29a07e1df   7 weeks ago      17.3MB
+postgres                             14.7-alpine      d9f0e6213b18   3 months ago     240MB
+frankescobar/allure-docker-service   latest           43c1dc75a96a   4 months ago     449MB
+confluentinc/cp-kafka                7.3.2            a7073da97a1f   5 months ago     853MB
+confluentinc/cp-zookeeper            7.3.2            c43998763eb6   5 months ago     853MB
+aerokube/selenoid                    1.10.10          11319998473d   5 months ago     17MB
+selenoid/vnc_chrome                  110.0            d46bff42fdc1   5 months ago     1.2GB
+postgres                             15.1             202696d29757   5 months ago     360MB
+aerokube/selenoid-ui                 1.10.9           45d822c2c8f0   6 months ago     17.6MB
+adven27/grpc-wiremock                latest           ba314d0f6573   7 months ago     926MB
+wiremock/wiremock                    2.35.0           415d2761a32b   8 months ago     252MB
+sskorol/selenoid_chromium_vnc        100.0            b72c70402035   14 months ago    866MB
+openjdk                              17-jdk           4717374ea615   14 months ago    501MB
+tatikzk@MacBook-Pro-Tatyana rangiffler %clear
+zsh: parse error near `<'
+tatikzk@MacBook-Pro-Tatyana rangiffler %  clear
+tatikzk@MacBook-Pro-Tatyana rangiffler % /gradlew :rangiffler-photo:clean build dockerTagLatest -x :rangiffler-e-2-e-tests:test
+zsh: no such file or directory: /gradlew
+tatikzk@MacBook-Pro-Tatyana rangiffler % /gradlew :rangiffler-photo:clean build dockerTagLatest -x :rangiffler-e-2-e-tests:test
+zsh: no such file or directory: /gradlew
+tatikzk@MacBook-Pro-Tatyana rangiffler % clear
+tatikzk@MacBook-Pro-Tatyana rangiffler % ./gradlew :rangiffler-photo:clean build dockerTagLatest -x :rangiffler-e-2-e-tests:test
+
+
+> Task :rangiffler-photo:test FAILED
+
+RangifflerPhotoApplicationTests > contextLoads() FAILED
+    java.lang.IllegalStateException at DefaultCacheAwareContextLoaderDelegate.java:142
+        Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException at ConstructorResolver.java:798
+            Caused by: org.springframework.beans.factory.BeanCreationException at ConstructorResolver.java:657
+                Caused by: org.springframework.beans.BeanInstantiationException at SimpleInstantiationStrategy.java:171
+                    Caused by: org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException at DataSourceProperties.java:182
+
+1 test completed, 1 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':rangiffler-photo:test'.
+> There were failing tests. See the report at: file:///Users/tatikzk/IdeaProjects/rangiffler/rangiffler-photo/build/reports/tests/test/index.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 3s
+44 actionable tasks: 15 executed, 29 up-to-date
+tatikzk@MacBook-Pro-Tatyana rangiffler %
