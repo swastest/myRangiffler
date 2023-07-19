@@ -1,0 +1,374 @@
+COMMAND_MODE=unix2003
+HOME=/Users/tatikzk
+LC_CTYPE=ru_RU.UTF-8
+LOGIN_SHELL=1
+LOGNAME=tatikzk
+OLDPWD=/Users/tatikzk/IdeaProjects/rangiffler
+PATH=/usr/bin:/bin:/usr/sbin:/sbin:/Users/tatikzk/IdeaProjects/rangiffler/node_modules/.bin
+PWD=/Users/tatikzk/IdeaProjects/rangiffler
+SHELL=/bin/zsh
+SHLVL=1
+SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.c9yKYmBolB/Listeners
+TERM=xterm-256color
+TERMINAL_EMULATOR=JetBrains-JediTerm
+TERM_SESSION_ID=cfb3cda9-829d-4f52-9bc3-e61d96730c66
+TMPDIR=/var/folders/sy/dth8xvys5yl28ks6pkyh8gv80000gn/T/
+USER=tatikzk
+XPC_FLAGS=0x0
+XPC_SERVICE_NAME=application.com.jetbrains.intellij.3491428.3492159
+__CFBundleIdentifier=com.jetbrains.intellij
+__CF_USER_TEXT_ENCODING=0x1F5:0x7:0x31
+__INTELLIJ_COMMAND_HISTFILE__=/Users/tatikzk/Library/Caches/JetBrains/IntelliJIdea2022.3/terminal/history/rangiffler-history2
+tatikzk@MacBook-Pro-Tatyana rangiffler % bash docker-compose-dev.sh push
+### Java version ###
+java 17.0.6 2023-01-17 LTS
+Java(TM) SE Runtime Environment (build 17.0.6+9-LTS-190)
+Java HotSpot(TM) 64-Bit Server VM (build 17.0.6+9-LTS-190, mixed mode, sharing)
+### Gradle version ###
+
+------------------------------------------------------------
+Gradle 7.6.1
+------------------------------------------------------------
+
+Build time:   2023-02-24 13:54:42 UTC
+Revision:     3905fe8ac072bbd925c70ddbddddf4463341f4b4
+
+Kotlin:       1.7.10
+Groovy:       3.0.13
+Ant:          Apache Ant(TM) version 1.10.11 compiled on July 10 2021
+JVM:          17.0.6 (Homebrew 17.0.6+0)
+OS:           Mac OS X 12.5 aarch64
+
+9e999f83fef1
+84375ae9d655
+dc33769bebb0
+9e999f83fef1
+84375ae9d655
+dc33769bebb0
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+"docker rmi" requires at least 1 argument.
+See 'docker rmi --help'.
+
+Usage:  docker rmi [OPTIONS] IMAGE [IMAGE...]
+
+Remove one or more images
+docker-compose-dev.sh: line 16: var: command not found
+### Build & push images (front: ./rangiffler-client/) ###
+Starting a Gradle Daemon (subsequent builds will be faster)
+
+> Task :rangiffler-auth:compileJava
+Note: /Users/tatikzk/IdeaProjects/rangiffler/rangiffler-auth/src/main/java/org/rangiffler/controller/RegisterController.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :rangiffler-photo:test FAILED
+
+RangifflerPhotoApplicationTests > contextLoads() FAILED
+    java.lang.IllegalStateException at DefaultCacheAwareContextLoaderDelegate.java:142
+        Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException at ConstructorResolver.java:798
+            Caused by: org.springframework.beans.factory.BeanCreationException at ConstructorResolver.java:657
+                Caused by: org.springframework.beans.BeanInstantiationException at SimpleInstantiationStrategy.java:171
+                    Caused by: org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException at DataSourceProperties.java:182
+
+1 test completed, 1 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':rangiffler-photo:test'.
+> There were failing tests. See the report at: file:///Users/tatikzk/IdeaProjects/rangiffler/rangiffler-photo/build/reports/tests/test/index.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 11s
+54 actionable tasks: 54 executed
+### Build dev frontend image ###
+[+] Building 19.3s (15/16)
+ => [internal] load build definition from Dockerfile                                                                                                                            0.0s
+ => => transferring dockerfile: 37B                                                                                                                                             0.0s
+ => [internal] load .dockerignore                                                                                                                                               0.0s
+ => => transferring context: 2B                                                                                                                                                 0.0s
+ => [internal] load metadata for docker.io/library/nginx:1.23.3-alpine                                                                                                          2.5s
+ => [internal] load metadata for docker.io/nikolaik/python-nodejs:latest                                                                                                        2.5s
+ => [auth] library/nginx:pull token for registry-1.docker.io                                                                                                                    0.0s
+ => [auth] nikolaik/python-nodejs:pull token for registry-1.docker.io                                                                                                           0.0s
+ => [release 1/3] FROM docker.io/library/nginx:1.23.3-alpine@sha256:6318314189b40e73145a48060bff4783a116c34cc7241532d0d94198fb2c9629                                            0.0s
+ => [build 1/6] FROM docker.io/nikolaik/python-nodejs:latest@sha256:87bbc3af0373f6bfac2bf66c331b2b2b0892f288a4d79bd43ba9d57afe6d9f65                                            0.0s
+ => [internal] load build context                                                                                                                                               2.7s
+ => => transferring context: 5.66MB                                                                                                                                             2.4s
+ => CACHED [release 2/3] COPY nginx.conf /etc/nginx/conf.d/default.conf                                                                                                         0.0s
+ => CACHED [build 2/6] WORKDIR /app                                                                                                                                             0.0s
+ => CACHED [build 3/6] COPY package.json ./                                                                                                                                     0.0s
+ => CACHED [build 4/6] RUN npm install                                                                                                                                          0.0s
+ => CACHED [build 5/6] COPY . ./                                                                                                                                                0.0s
+ => ERROR [build 6/6] RUN npm run build:docker                                                                                                                                 14.0s
+------
+ > [build 6/6] RUN npm run build:docker:
+#15 2.631
+#15 2.631 > rangiffler-client@1.0.0 build:docker
+#15 2.631 > cross-env NODE_ENV=production webpack --mode production
+#15 2.631
+#15 11.21 (node:34) [DEP_WEBPACK_TEMPLATE_PATH_PLUGIN_REPLACE_PATH_VARIABLES_HASH] DeprecationWarning: [hash] is now [fullhash] (also consider using [chunkhash] or [contenthash], see documentation for details)
+#15 11.21 (Use `node --trace-deprecation ...` to show where the warning was created)
+#15 13.44 assets by status 17.4 KiB [cached] 3 assets
+#15 13.44 ./index.tsx 39 bytes [not cacheable] [built] [code generated] [1 error]
+#15 13.44
+#15 13.44 ERROR in ./index.tsx
+#15 13.44 Module build failed (from ../node_modules/babel-loader/lib/index.js):
+#15 13.44 Error [ERR_REQUIRE_ESM]: require() of ES Module /app/node_modules/pkg-dir/node_modules/path-exists/index.js from /app/node_modules/pkg-dir/node_modules/find-up/index.js not supported.
+#15 13.44 Instead change the require of /app/node_modules/pkg-dir/node_modules/path-exists/index.js in /app/node_modules/pkg-dir/node_modules/find-up/index.js to a dynamic import() which is available in all CommonJS modules.
+#15 13.44     at Object.<anonymous> (/app/node_modules/pkg-dir/node_modules/find-up/index.js:4:20)
+#15 13.44     at Object.<anonymous> (/app/node_modules/pkg-dir/index.js:3:16)
+#15 13.44     at Object.<anonymous> (/app/node_modules/find-cache-dir/index.js:5:16)
+#15 13.44     at Object.<anonymous> (/app/node_modules/babel-loader/lib/cache.js:16:22)
+#15 13.44     at Object.<anonymous> (/app/node_modules/babel-loader/lib/index.js:21:15)
+#15 13.44     at loadLoader (/app/node_modules/loader-runner/lib/loadLoader.js:19:17)
+#15 13.44     at iteratePitchingLoaders (/app/node_modules/loader-runner/lib/LoaderRunner.js:182:2)
+#15 13.44     at runLoaders (/app/node_modules/loader-runner/lib/LoaderRunner.js:398:2)
+#15 13.44     at NormalModule._doBuild (/app/node_modules/webpack/lib/NormalModule.js:821:3)
+#15 13.44     at NormalModule.build (/app/node_modules/webpack/lib/NormalModule.js:965:15)
+#15 13.44     at /app/node_modules/webpack/lib/Compilation.js:1371:12
+#15 13.44     at NormalModule.needBuild (/app/node_modules/webpack/lib/NormalModule.js:1253:32)
+#15 13.44     at Compilation._buildModule (/app/node_modules/webpack/lib/Compilation.js:1352:10)
+#15 13.44     at /app/node_modules/webpack/lib/util/AsyncQueue.js:303:10
+#15 13.44     at Hook.eval [as callAsync] (eval at create (/app/node_modules/tapable/lib/HookCodeFactory.js:33:10), <anonymous>:6:1)
+#15 13.44     at Hook.CALL_ASYNC_DELEGATE [as _callAsync] (/app/node_modules/tapable/lib/Hook.js:18:14)
+#15 13.44     at AsyncQueue._startProcessing (/app/node_modules/webpack/lib/util/AsyncQueue.js:293:26)
+#15 13.44     at AsyncQueue._ensureProcessing (/app/node_modules/webpack/lib/util/AsyncQueue.js:280:12)
+#15 13.44
+#15 13.44 webpack 5.77.0 compiled with 1 error in 3804 ms
+------
+executor failed running [/bin/sh -c npm run ${NPM_COMMAND}]: exit code: 1
+### Push frontend image ###
+The push refers to repository [docker.io/swastest/rangiffler-front]
+An image does not exist locally with the tag: swastest/rangiffler-front
+The push refers to repository [docker.io/swastest/rangiffler-front]
+An image does not exist locally with the tag: swastest/rangiffler-front
+REPOSITORY                           TAG              IMAGE ID       CREATED         SIZE
+<none>                               <none>           7493b9b65116   5 days ago      1.26GB
+nikolaikpython-nodejs_dist           latest           fd9741d0af34   5 days ago      1.75GB
+nikolaik/python-nodejs               latest           423aadb649b6   2 weeks ago     1.26GB
+dtuchs/niffler-e-2-e-tests           0.0.4-SNAPSHOT   92aeff7d336b   3 weeks ago     469MB
+dtuchs/niffler-e-2-e-tests           latest           92aeff7d336b   3 weeks ago     469MB
+dtuchs/niffler-userdata              0.0.4-SNAPSHOT   8f2e7410923a   3 weeks ago     313MB
+dtuchs/niffler-userdata              latest           8f2e7410923a   3 weeks ago     313MB
+dtuchs/niffler-spend                 0.0.4-SNAPSHOT   6eca6bac6482   3 weeks ago     328MB
+dtuchs/niffler-spend                 latest           6eca6bac6482   3 weeks ago     328MB
+dtuchs/niffler-gateway               0.0.4-SNAPSHOT   24306a6e0a28   3 weeks ago     332MB
+dtuchs/niffler-gateway               latest           24306a6e0a28   3 weeks ago     332MB
+dtuchs/niffler-currency              0.0.4-SNAPSHOT   38360b83809b   3 weeks ago     328MB
+dtuchs/niffler-currency              latest           38360b83809b   3 weeks ago     328MB
+dtuchs/niffler-auth                  0.0.4-SNAPSHOT   83c1631eab97   3 weeks ago     321MB
+dtuchs/niffler-auth                  latest           83c1631eab97   3 weeks ago     321MB
+dtuchs/niffler-frontend-test         0.0.4-SNAPSHOT   80035690c4cc   4 weeks ago     53MB
+dtuchs/niffler-frontend-test         latest           80035690c4cc   4 weeks ago     53MB
+mysql                                latest           1732fe3340d5   4 weeks ago     587MB
+selenoid/firefox                     114.0            dbe78dc2ba24   4 weeks ago     1.2GB
+<none>                               <none>           09adad852d1d   5 weeks ago     501MB
+mysql                                8.0.33           b3077e10c878   6 weeks ago     592MB
+aerokube/selenoid                    1.10.12          10d29a07e1df   7 weeks ago     17.3MB
+postgres                             14.7-alpine      d9f0e6213b18   3 months ago    240MB
+frankescobar/allure-docker-service   latest           43c1dc75a96a   4 months ago    449MB
+confluentinc/cp-kafka                7.3.2            a7073da97a1f   5 months ago    853MB
+confluentinc/cp-zookeeper            7.3.2            c43998763eb6   5 months ago    853MB
+aerokube/selenoid                    1.10.10          11319998473d   5 months ago    17MB
+selenoid/vnc_chrome                  110.0            d46bff42fdc1   5 months ago    1.2GB
+postgres                             15.1             202696d29757   5 months ago    360MB
+aerokube/selenoid-ui                 1.10.9           45d822c2c8f0   6 months ago    17.6MB
+adven27/grpc-wiremock                latest           ba314d0f6573   7 months ago    926MB
+wiremock/wiremock                    2.35.0           415d2761a32b   8 months ago    252MB
+sskorol/selenoid_chromium_vnc        100.0            b72c70402035   14 months ago   866MB
+openjdk                              17-jdk           4717374ea615   14 months ago   501MB
+[+] Running 0/6
+ ⠿ geo.rangiffler.dc Error                                                                                                                                                      3.0s
+ ⠿ gateway.rangiffler.dc Error                                                                                                                                                  3.0s
+ ⠿ frontend.rangiffler.dc Error                                                                                                                                                 3.0s
+ ⠿ auth.rangiffler.dc Error                                                                                                                                                     3.0s
+ ⠿ users.rangiffler.dc Error                                                                                                                                                    3.0s
+ ⠿ photo.rangiffler.dc Error                                                                                                                                                    3.0s
+Error response from daemon: manifest for swastest/rangiffler-geo:latest not found: manifest unknown: manifest unknown
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+tatikzk@MacBook-Pro-Tatyana rangiffler % clear
+tatikzk@MacBook-Pro-Tatyana rangiffler % bash docker-compose-dev.sh push
+### Java version ###
+java 17.0.6 2023-01-17 LTS
+Java(TM) SE Runtime Environment (build 17.0.6+9-LTS-190)
+Java HotSpot(TM) 64-Bit Server VM (build 17.0.6+9-LTS-190, mixed mode, sharing)
+### Gradle version ###
+
+------------------------------------------------------------
+Gradle 7.6.1
+------------------------------------------------------------
+
+Build time:   2023-02-24 13:54:42 UTC
+Revision:     3905fe8ac072bbd925c70ddbddddf4463341f4b4
+
+Kotlin:       1.7.10
+Groovy:       3.0.13
+Ant:          Apache Ant(TM) version 1.10.11 compiled on July 10 2021
+JVM:          17.0.6 (Homebrew 17.0.6+0)
+OS:           Mac OS X 12.5 aarch64
+
+"docker stop" requires at least 1 argument.
+See 'docker stop --help'.
+
+Usage:  docker stop [OPTIONS] CONTAINER [CONTAINER...]
+
+Stop one or more running containers
+"docker rm" requires at least 1 argument.
+See 'docker rm --help'.
+
+Usage:  docker rm [OPTIONS] CONTAINER [CONTAINER...]
+
+Remove one or more containers
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+"docker rmi" requires at least 1 argument.
+See 'docker rmi --help'.
+
+Usage:  docker rmi [OPTIONS] IMAGE [IMAGE...]
+
+Remove one or more images
+docker-compose-dev.sh: line 16: var: command not found
+### Build & push images (front: ./rangiffler-client/) ###
+
+> Task :rangiffler-auth:compileJava
+Note: /Users/tatikzk/IdeaProjects/rangiffler/rangiffler-auth/src/main/java/org/rangiffler/controller/RegisterController.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :rangiffler-photo:test FAILED
+
+RangifflerPhotoApplicationTests > contextLoads() FAILED
+    java.lang.IllegalStateException at DefaultCacheAwareContextLoaderDelegate.java:142
+        Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException at ConstructorResolver.java:798
+            Caused by: org.springframework.beans.factory.BeanCreationException at ConstructorResolver.java:657
+                Caused by: org.springframework.beans.BeanInstantiationException at SimpleInstantiationStrategy.java:171
+                    Caused by: org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException at DataSourceProperties.java:182
+
+1 test completed, 1 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':rangiffler-photo:test'.
+> There were failing tests. See the report at: file:///Users/tatikzk/IdeaProjects/rangiffler/rangiffler-photo/build/reports/tests/test/index.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 6s
+54 actionable tasks: 54 executed
+### Build dev frontend image ###
+[+] Building 15.6s (15/16)
+ => [internal] load build definition from Dockerfile                                                                                                                            0.0s
+ => => transferring dockerfile: 37B                                                                                                                                             0.0s
+ => [internal] load .dockerignore                                                                                                                                               0.0s
+ => => transferring context: 2B                                                                                                                                                 0.0s
+ => [internal] load metadata for docker.io/library/nginx:1.23.3-alpine                                                                                                          2.4s
+ => [internal] load metadata for docker.io/nikolaik/python-nodejs:latest                                                                                                        2.4s
+ => [auth] library/nginx:pull token for registry-1.docker.io                                                                                                                    0.0s
+ => [auth] nikolaik/python-nodejs:pull token for registry-1.docker.io                                                                                                           0.0s
+ => [build 1/6] FROM docker.io/nikolaik/python-nodejs:latest@sha256:87bbc3af0373f6bfac2bf66c331b2b2b0892f288a4d79bd43ba9d57afe6d9f65                                            0.0s
+ => [release 1/3] FROM docker.io/library/nginx:1.23.3-alpine@sha256:6318314189b40e73145a48060bff4783a116c34cc7241532d0d94198fb2c9629                                            0.0s
+ => [internal] load build context                                                                                                                                               1.7s
+ => => transferring context: 5.66MB                                                                                                                                             1.6s
+ => CACHED [build 2/6] WORKDIR /app                                                                                                                                             0.0s
+ => CACHED [build 3/6] COPY package.json ./                                                                                                                                     0.0s
+ => CACHED [build 4/6] RUN npm install                                                                                                                                          0.0s
+ => CACHED [build 5/6] COPY . ./                                                                                                                                                0.0s
+ => CACHED [release 2/3] COPY nginx.conf /etc/nginx/conf.d/default.conf                                                                                                         0.0s
+ => ERROR [build 6/6] RUN npm run build:docker                                                                                                                                 11.4s
+------
+ > [build 6/6] RUN npm run build:docker:
+#15 2.196
+#15 2.196 > rangiffler-client@1.0.0 build:docker
+#15 2.196 > cross-env NODE_ENV=production webpack --mode production
+#15 2.196
+#15 9.525 (node:35) [DEP_WEBPACK_TEMPLATE_PATH_PLUGIN_REPLACE_PATH_VARIABLES_HASH] DeprecationWarning: [hash] is now [fullhash] (also consider using [chunkhash] or [contenthash], see documentation for details)
+#15 9.525 (Use `node --trace-deprecation ...` to show where the warning was created)
+#15 11.02 assets by status 17.4 KiB [cached] 3 assets
+#15 11.02 ./index.tsx 39 bytes [not cacheable] [built] [code generated] [1 error]
+#15 11.02
+#15 11.02 ERROR in ./index.tsx
+#15 11.02 Module build failed (from ../node_modules/babel-loader/lib/index.js):
+#15 11.02 Error [ERR_REQUIRE_ESM]: require() of ES Module /app/node_modules/pkg-dir/node_modules/path-exists/index.js from /app/node_modules/pkg-dir/node_modules/find-up/index.js not supported.
+#15 11.02 Instead change the require of /app/node_modules/pkg-dir/node_modules/path-exists/index.js in /app/node_modules/pkg-dir/node_modules/find-up/index.js to a dynamic import() which is available in all CommonJS modules.
+#15 11.02     at Object.<anonymous> (/app/node_modules/pkg-dir/node_modules/find-up/index.js:4:20)
+#15 11.02     at Object.<anonymous> (/app/node_modules/pkg-dir/index.js:3:16)
+#15 11.02     at Object.<anonymous> (/app/node_modules/find-cache-dir/index.js:5:16)
+#15 11.02     at Object.<anonymous> (/app/node_modules/babel-loader/lib/cache.js:16:22)
+#15 11.02     at Object.<anonymous> (/app/node_modules/babel-loader/lib/index.js:21:15)
+#15 11.02     at loadLoader (/app/node_modules/loader-runner/lib/loadLoader.js:19:17)
+#15 11.02     at iteratePitchingLoaders (/app/node_modules/loader-runner/lib/LoaderRunner.js:182:2)
+#15 11.02     at runLoaders (/app/node_modules/loader-runner/lib/LoaderRunner.js:398:2)
+#15 11.02     at NormalModule._doBuild (/app/node_modules/webpack/lib/NormalModule.js:821:3)
+#15 11.02     at NormalModule.build (/app/node_modules/webpack/lib/NormalModule.js:965:15)
+#15 11.02     at /app/node_modules/webpack/lib/Compilation.js:1371:12
+#15 11.02     at NormalModule.needBuild (/app/node_modules/webpack/lib/NormalModule.js:1253:32)
+#15 11.02     at Compilation._buildModule (/app/node_modules/webpack/lib/Compilation.js:1352:10)
+#15 11.02     at /app/node_modules/webpack/lib/util/AsyncQueue.js:303:10
+#15 11.02     at Hook.eval [as callAsync] (eval at create (/app/node_modules/tapable/lib/HookCodeFactory.js:33:10), <anonymous>:6:1)
+#15 11.02     at Hook.CALL_ASYNC_DELEGATE [as _callAsync] (/app/node_modules/tapable/lib/Hook.js:18:14)
+#15 11.02     at AsyncQueue._startProcessing (/app/node_modules/webpack/lib/util/AsyncQueue.js:293:26)
+#15 11.02     at AsyncQueue._ensureProcessing (/app/node_modules/webpack/lib/util/AsyncQueue.js:280:12)
+#15 11.02
+#15 11.02 webpack 5.77.0 compiled with 1 error in 2904 ms
+------
+executor failed running [/bin/sh -c npm run ${NPM_COMMAND}]: exit code: 1
+### Push frontend image ###
+The push refers to repository [docker.io/swastest/rangiffler-front]
+An image does not exist locally with the tag: swastest/rangiffler-front
+The push refers to repository [docker.io/swastest/rangiffler-front]
+An image does not exist locally with the tag: swastest/rangiffler-front
+REPOSITORY                           TAG              IMAGE ID       CREATED         SIZE
+<none>                               <none>           7493b9b65116   5 days ago      1.26GB
+nikolaikpython-nodejs_dist           latest           fd9741d0af34   5 days ago      1.75GB
+nikolaik/python-nodejs               latest           423aadb649b6   2 weeks ago     1.26GB
+dtuchs/niffler-e-2-e-tests           0.0.4-SNAPSHOT   92aeff7d336b   3 weeks ago     469MB
+dtuchs/niffler-e-2-e-tests           latest           92aeff7d336b   3 weeks ago     469MB
+dtuchs/niffler-userdata              0.0.4-SNAPSHOT   8f2e7410923a   3 weeks ago     313MB
+dtuchs/niffler-userdata              latest           8f2e7410923a   3 weeks ago     313MB
+dtuchs/niffler-spend                 0.0.4-SNAPSHOT   6eca6bac6482   3 weeks ago     328MB
+dtuchs/niffler-spend                 latest           6eca6bac6482   3 weeks ago     328MB
+dtuchs/niffler-gateway               0.0.4-SNAPSHOT   24306a6e0a28   3 weeks ago     332MB
+dtuchs/niffler-gateway               latest           24306a6e0a28   3 weeks ago     332MB
+dtuchs/niffler-currency              0.0.4-SNAPSHOT   38360b83809b   3 weeks ago     328MB
+dtuchs/niffler-currency              latest           38360b83809b   3 weeks ago     328MB
+dtuchs/niffler-auth                  0.0.4-SNAPSHOT   83c1631eab97   3 weeks ago     321MB
+dtuchs/niffler-auth                  latest           83c1631eab97   3 weeks ago     321MB
+dtuchs/niffler-frontend-test         0.0.4-SNAPSHOT   80035690c4cc   4 weeks ago     53MB
+dtuchs/niffler-frontend-test         latest           80035690c4cc   4 weeks ago     53MB
+mysql                                latest           1732fe3340d5   4 weeks ago     587MB
+selenoid/firefox                     114.0            dbe78dc2ba24   4 weeks ago     1.2GB
+<none>                               <none>           09adad852d1d   5 weeks ago     501MB
+mysql                                8.0.33           b3077e10c878   6 weeks ago     592MB
+aerokube/selenoid                    1.10.12          10d29a07e1df   7 weeks ago     17.3MB
+postgres                             14.7-alpine      d9f0e6213b18   3 months ago    240MB
+frankescobar/allure-docker-service   latest           43c1dc75a96a   4 months ago    449MB
+confluentinc/cp-kafka                7.3.2            a7073da97a1f   5 months ago    853MB
+confluentinc/cp-zookeeper            7.3.2            c43998763eb6   5 months ago    853MB
+aerokube/selenoid                    1.10.10          11319998473d   5 months ago    17MB
+selenoid/vnc_chrome                  110.0            d46bff42fdc1   5 months ago    1.2GB
+postgres                             15.1             202696d29757   5 months ago    360MB
+aerokube/selenoid-ui                 1.10.9           45d822c2c8f0   6 months ago    17.6MB
+adven27/grpc-wiremock                latest           ba314d0f6573   7 months ago    926MB
+wiremock/wiremock                    2.35.0           415d2761a32b   8 months ago    252MB
+sskorol/selenoid_chromium_vnc        100.0            b72c70402035   14 months ago   866MB
+openjdk                              17-jdk           4717374ea615   14 months ago   501MB
+[+] Running 0/6
+ ⠿ frontend.rangiffler.dc Error                                                                                                                                                 4.0s
+ ⠿ photo.rangiffler.dc Error                                                                                                                                                    4.0s
+ ⠿ auth.rangiffler.dc Error                                                                                                                                                     4.0s
+ ⠿ gateway.rangiffler.dc Error                                                                                                                                                  4.0s
+ ⠿ geo.rangiffler.dc Error                                                                                                                                                      4.0s
+ ⠿ users.rangiffler.dc Error                                                                                                                                                    4.0s
+Error response from daemon: manifest for swastest/rangiffler-photo:latest not found: manifest unknown: manifest unknown
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+tatikzk@MacBook-Pro-Tatyana rangiffler %
