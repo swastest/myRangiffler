@@ -2,7 +2,6 @@ package org.rangiffler.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import data.entity.PhotoEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,13 +32,13 @@ public class PhotoJson {
     @JsonProperty("username")
     private String username;
 
-    public static PhotoEntity toEntity(PhotoJson photoJson) {
-        final PhotoEntity photoEntity = new PhotoEntity();
-        photoEntity.setPhoto(photoJson.getPhoto().getBytes(StandardCharsets.UTF_8));
-        photoEntity.setUsername(photoJson.getUsername());
-        photoEntity.setDescription(photoJson.getDescription());
-        photoEntity.setCountryId(photoJson.getCountryJson().getId());
-        return photoEntity;
-    }
+//    public static PhotoEntity toEntity(PhotoJson photoJson) {
+//        final PhotoEntity photoEntity = new PhotoEntity();
+//        photoEntity.setPhoto(photoJson.getPhoto().getBytes(StandardCharsets.UTF_8));
+//        photoEntity.setUsername(photoJson.getUsername());
+//        photoEntity.setDescription(photoJson.getDescription());
+//        photoEntity.setCountryId(photoJson.getCountryJson().getId());
+//        return photoEntity;
+//    }
 
 }
