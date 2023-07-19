@@ -67,7 +67,7 @@ spring:
       group-id: 'userdata'
       auto-offset-reset: earliest
   datasource:
-    url: jdbc:mysql://rangiffler-all-db:3306/rangiffler_users?serverTimezone=UTC&useSSL=false&createDatabaseIfNotExist=true
+    url: jdbc:mysql://rangiffler-all-db:3306/rangiffler_users?serverTimezone=UTC&createDatabaseIfNotExist=true
   jpa:
     hibernate:
       ddl-auto: update

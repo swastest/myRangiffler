@@ -87,7 +87,7 @@ services:
 
   users.rangiffler.dc:
     container_name: users.rangiffler.dc
-    image: swastest/niffler-users:latest
+    image: swastest/rangiffler-users:latest
     expose:
       - "8089"
       - "8090"
@@ -131,7 +131,7 @@ services:
 
   frontend.rangiffler.dc:
     container_name: frontend.rangiffler.dc
-    image: swastest/rangiffler-frontend:latest
+    image: swastest/rangiffler-front:latest
     ports:
       - "80:80"
     restart: always
@@ -144,7 +144,7 @@ services:
 
 volumes:
   rangiffler_mysql_data:
-    external: true
+    external: false
 
 networks:
   rangiffler-network:

@@ -69,7 +69,7 @@ grpc:
 rangiffler-photo:
   base-uri: 'http://photo.rangiffler.dc:8093'
 rangiffler-users:
-  base-uri: 'http://users.rangiffler.dc'
+  base-uri: 'http://users.rangiffler.dc:8089'
 rangiffler-geo:
   base-uri: 'http://geo.rangiffler.dc:8091'
 rangiffler-front:
