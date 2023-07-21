@@ -10,5 +10,5 @@ public interface UserAuthDao {
     int updateUser(UserAuthEntity user);
     void deleteUser(UserAuthEntity user);
     UserAuthEntity userInfo(String userName);
-    String getUserId(String userName);
+    String getUserIdByUsername(String userName);
 }

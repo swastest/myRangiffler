@@ -1,46 +1,33 @@
 package org.rangiffler.db.entity.userdata;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
+import java.util.UUID;
 
-@Getter
-@Setter
 @ToString
-@RequiredArgsConstructor
-@Entity
-@Table(name = "friends")
-@IdClass(FriendsId.class)
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class FriendsEntity {
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private UserDataEntity user;
+    private UUID userId;
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "friend_id", referencedColumnName = "id")
-    private UserDataEntity friend;
+    private UUID friendId;
 
-    @Column(name = "pending")
     private boolean pending;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         FriendsEntity that = (FriendsEntity) o;
-        return user != null && Objects.equals(user, that.user)
-               && friend != null && Objects.equals(friend, that.friend);
+        return pending == that.pending && Objects.equals(userId, that.userId) && Objects.equals(friendId, that.friendId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user, friend);
+        return Objects.hash(userId, friendId, pending);
     }
 }
