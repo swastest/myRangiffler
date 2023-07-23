@@ -1,4 +1,4 @@
-package org.rangiffler.testDoc;
+package org.rangiffler.utils.testDoc;
 
 import org.apache.kafka.common.protocol.types.Field;
 

@@ -3,11 +3,9 @@ package org.rangiffler.jupiter.extension;
 import guru.qa.grpc.rangiffler.grpc.Country;
 import guru.qa.grpc.rangiffler.grpc.CountryByCodeRequest;
 import guru.qa.grpc.rangiffler.grpc.Photos;
-import io.qameta.allure.AllureId;
 import io.qameta.allure.Step;
 import org.awaitility.Awaitility;
 import org.awaitility.core.ConditionTimeoutException;
-import org.junit.jupiter.api.extension.ExtensionContext;
 import org.rangiffler.api.grpc.CountryGrpcClient;
 import org.rangiffler.api.grpc.PhotoGrpcClient;
 import org.rangiffler.api.rest.AuthRestClient;
@@ -20,9 +18,7 @@ import org.rangiffler.model.UserJson;
 import org.rangiffler.utils.DataUtils;
 
 import javax.annotation.Nonnull;
-
 import java.time.Duration;
-import java.util.Objects;
 
 import static org.apache.commons.lang3.ArrayUtils.isNotEmpty;
 import static org.rangiffler.utils.DataUtils.addImageByClassPath;
@@ -49,9 +45,9 @@ public class GenerateUserService {
     }
 
     private void addPhotoIfPresent(Photo[] photos, UserJson targetUser) {
-        if(isNotEmpty(photos)) {
+        if (isNotEmpty(photos)) {
             Photos.Builder builder = Photos.newBuilder();
-            for(Photo photo: photos) {
+            for (Photo photo : photos) {
                 CountryByCodeRequest req = CountryByCodeRequest.newBuilder()
                         .setCode(photo.countryCode())
                         .build();
@@ -82,6 +78,7 @@ public class GenerateUserService {
             for (Friend friend : incomeInvitations) {
                 UserJson friendJson = createRandomUser();
                 userDataRestClient.sendInviteFriend(friendJson.getUsername(), targetUser.getUsername());
+                addPhotoIfPresent(friend.photos(), friendJson);
                 targetUser.getIncomeInvitations().add(friendJson);
             }
         }
@@ -93,6 +90,7 @@ public class GenerateUserService {
                 UserJson friendJson = createRandomUser();
                 userDataRestClient.sendInviteFriend(targetUser.getUsername(), friendJson.getUsername());
                 userDataRestClient.acceptInvitation(friendJson.getUsername(), targetUser.getUsername());
+                addPhotoIfPresent(friend.photos(), friendJson);
                 targetUser.getFriends().add(friendJson);
             }
         }
@@ -132,11 +130,5 @@ public class GenerateUserService {
         UserJson currentUserInfo = userDataRestClient.getCurrentUserInfo(username);
         currentUserInfo.setPassword(password);
         return currentUserInfo;
-    }
-
-    private String getTestId(ExtensionContext context) {
-        return Objects
-                .requireNonNull(context.getRequiredTestMethod().getAnnotation(AllureId.class))
-                .value();
     }
 }

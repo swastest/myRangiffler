@@ -8,10 +8,11 @@ import org.junit.jupiter.api.Test;
 import org.rangiffler.jupiter.annotation.GenerateUser;
 import org.rangiffler.model.UserJson;
 import org.rangiffler.page.LoginPage;
+import org.rangiffler.page.component.UserHeader;
 import org.rangiffler.utils.DataUtils;
 import org.rangiffler.utils.ErrorMessage;
 
-import static org.rangiffler.testDoc.TestTag.*;
+import static org.rangiffler.utils.testDoc.TestTag.*;
 
 @DisplayName("WEB: Authorization")
 public class LoginTest extends BaseWebTest {
@@ -25,8 +26,8 @@ public class LoginTest extends BaseWebTest {
         landingPage.open()
                 .toLogin()
                 .fillAuthorizationForm(userJson.getUsername(), userJson.getPassword())
-                .submit(new LoginPage()); //main
-        header.toProfile()
+                .submit(new UserHeader())
+                .toProfile()
                 .checkUserLoginName(userJson.getUsername());
     }
 
@@ -39,8 +40,8 @@ public class LoginTest extends BaseWebTest {
         registerPage.open()
                 .toLogin()
                 .fillAuthorizationForm(userJson.getUsername(), userJson.getPassword())
-                .submit(new LoginPage()); //main
-        header.toProfile()
+                .submit(new UserHeader())
+                .toProfile()
                 .checkUserLoginName(userJson.getUsername());
     }
 

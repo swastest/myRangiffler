@@ -1,4 +1,4 @@
-package org.rangiffler.condition;
+package org.rangiffler.condition.friends;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ex.ElementNotFound;

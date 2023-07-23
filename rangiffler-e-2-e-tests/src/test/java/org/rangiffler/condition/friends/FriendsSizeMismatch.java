@@ -1,4 +1,4 @@
-package org.rangiffler.condition;
+package org.rangiffler.condition.friends;
 
 import com.codeborne.selenide.ex.UIAssertionError;
 import com.codeborne.selenide.impl.CollectionSource;

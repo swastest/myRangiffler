@@ -2,22 +2,23 @@ package org.rangiffler.page.component.headerModule;
 
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+import org.rangiffler.model.UserJson;
 
-import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byTagName;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static org.rangiffler.condition.friends.FriendsCondition.friends;
 
 public class FriendsModule {
 
     private final SelenideElement friendsTable = $("table[aria-label='friends table']");
 
-    @Step("Checking the expected number of friends in size: {0}")
-    public FriendsModule checkExistingFriendsCount(final int expectedSize) {
+    @Step("Checking existing friends: {0}")
+    public FriendsModule checkExistingFriends(UserJson...userJsons) {
         friendsTable.$$(byTagName("tr"))
-                .shouldHave(size(expectedSize));
+                .shouldHave(friends(userJsons));
         return this;
     }
 

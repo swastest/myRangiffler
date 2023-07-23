@@ -3,6 +3,7 @@ package org.rangiffler.page.component;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+import org.rangiffler.page.component.headerModule.FriendsModule;
 import org.rangiffler.page.component.headerModule.ProfileModule;
 
 import static com.codeborne.selenide.Selectors.byTagName;
@@ -64,10 +65,10 @@ public class UserHeader extends BaseComponent<UserHeader> {
 //        return new ProfileModule();
 //    }
 //
-//    @Step("Go to user friends")
-//    public FriendsModule toFriends() {
-//        friendsIcon.click();
-//        return new FriendsModule();
-//    }
+    @Step("Go to user friends")
+    public FriendsModule toFriends() {
+        friendsIcon.click();
+        return new FriendsModule();
+    }
 
 }

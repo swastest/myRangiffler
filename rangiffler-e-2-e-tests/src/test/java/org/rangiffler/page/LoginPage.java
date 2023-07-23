@@ -20,9 +20,9 @@ public class LoginPage extends BasePage<LoginPage> {
     private final SelenideElement errorMessage = $(".form__error");
 
     @Step("Submit login")
-    public <T extends BasePage> T submit(T expectedPage) {
+    public <T> T submit(T page) {
         submitButton.click();
-        return expectedPage;
+        return page;
     }
 
     @Step("Authorization: username: {0}, password: {1}")
@@ -67,5 +67,4 @@ public class LoginPage extends BasePage<LoginPage> {
         passwordInput.should(visible);
         return this;
     }
-
 }

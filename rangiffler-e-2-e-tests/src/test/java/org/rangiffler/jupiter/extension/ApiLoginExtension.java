@@ -1,24 +1,21 @@
 package org.rangiffler.jupiter.extension;
 
 import com.codeborne.selenide.Selenide;
-import io.qameta.allure.AllureId;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import org.rangiffler.api.rest.AuthRestClient;
 import org.rangiffler.api.context.CookieContext;
 import org.rangiffler.api.context.SessionStorageContext;
+import org.rangiffler.api.rest.AuthRestClient;
 import org.rangiffler.jupiter.annotation.ApiLogin;
 import org.rangiffler.model.UserJson;
 import org.rangiffler.utils.OauthUtils;
-
-import java.util.Objects;
 
 import static org.apache.commons.lang3.ArrayUtils.isEmpty;
 import static org.rangiffler.config.ConfigHub.configEnv;
 
 
-public class ApiLoginExtension implements BeforeEachCallback, AfterTestExecutionCallback {
+public class ApiLoginExtension  extends BaseExtension implements BeforeEachCallback, AfterTestExecutionCallback {
 
     private static final GenerateUserService generateService = new GenerateUserService();
    private final AuthRestClient authRestClient = new AuthRestClient();
@@ -69,11 +66,5 @@ public class ApiLoginExtension implements BeforeEachCallback, AfterTestExecution
     public void afterTestExecution(ExtensionContext context) throws Exception {
         SessionStorageContext.getInstance().release();
         CookieContext.getInstance().release();
-    }
-
-    private String getTestId(ExtensionContext context) {
-        return Objects
-                .requireNonNull(context.getRequiredTestMethod().getAnnotation(AllureId.class))
-                .value();
     }
 }
