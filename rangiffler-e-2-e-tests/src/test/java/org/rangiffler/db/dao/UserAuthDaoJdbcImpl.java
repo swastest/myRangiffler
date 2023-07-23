@@ -10,8 +10,6 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.support.JdbcTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -39,9 +37,11 @@ public class UserAuthDaoJdbcImpl implements UserAuthDao {
     @Override
     public void deleteUser(UserAuthEntity user) {
         UUID userId = user.getId();
+        byte[] userIdBytes = jdbcTemplate.queryForObject("SELECT UUID_TO_BIN(?)", byte[].class, userId.toString());
+
         transactionTemplate.execute(status -> {
-            jdbcTemplate.update("DELETE FROM authorities WHERE user_id =?", userId);
-            return jdbcTemplate.update("DELETE FROM users WHERE id =?", userId);
+            jdbcTemplate.update("DELETE FROM authorities WHERE user_id =?", userIdBytes);
+            return jdbcTemplate.update("DELETE FROM users WHERE id =?", userIdBytes);
         });
     }
 
@@ -50,15 +50,7 @@ public class UserAuthDaoJdbcImpl implements UserAuthDao {
         UserAuthEntity user = new UserAuthEntity();
         jdbcTemplate.query("SELECT * FROM users WHERE username = ?",
                 rs -> {
-//            UUID uuid = UUID.nameUUIDFromBytes((byte[]) rs.getObject("id"));
-                    ByteBuffer byteBuffer = ByteBuffer.wrap((byte[]) rs.getObject("id"));
-                    byteBuffer.order(ByteOrder.BIG_ENDIAN);
-
-                    long mostSignificantBits = byteBuffer.getLong();
-                    long leastSignificantBits = byteBuffer.getLong();
-
-                    UUID uuid = new UUID(mostSignificantBits, leastSignificantBits);
-                    user.setId(uuid);
+                    user.convertSetId((byte[]) rs.getObject("id"));
                     user.setUsername(rs.getString("username"));
                     user.setPassword(rs.getString("password"));
                     user.setEnabled(rs.getBoolean("enabled"));

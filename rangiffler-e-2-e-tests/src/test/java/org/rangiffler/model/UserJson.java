@@ -1,7 +1,9 @@
 package org.rangiffler.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import guru.qa.grpc.rangiffler.grpc.Photo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,7 +41,8 @@ public class UserJson {
     private FriendStatus friendStatus;
 
     private transient List<UserJson> friends = new ArrayList<>();
-    private transient List<UserJson> invitations = new ArrayList<>();
+    private transient List<UserJson> outcomeInvitations = new ArrayList<>();
+    private transient List<UserJson> incomeInvitations = new ArrayList<>();
     private transient List<PhotoJson> photos = new ArrayList<>();
 
 }

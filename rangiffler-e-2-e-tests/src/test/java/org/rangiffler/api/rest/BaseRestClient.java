@@ -1,4 +1,4 @@
-package org.rangiffler.api;
+package org.rangiffler.api.rest;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;

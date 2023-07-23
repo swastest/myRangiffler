@@ -15,14 +15,10 @@ import java.lang.annotation.Target;
 public @interface GenerateUser {
     String username() default "";
     String password() default "";
+    String avatarPath() default "";
+    Photo[] photos() default {};
 
     Friend[] friends() default {};
-
     Friend[] outcomeInvitations() default {};
-
     Friend[] incomeInvitations() default {};
-
-//    Category[] categories() default {};
-//
-//    GenerateSpend[] spends() default {};
 }

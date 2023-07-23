@@ -1,20 +1,26 @@
 package org.rangiffler.jupiter.extension;
 
 import com.codeborne.selenide.Selenide;
-
+import io.qameta.allure.AllureId;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import org.rangiffler.api.AuthRestClient;
+import org.rangiffler.api.rest.AuthRestClient;
 import org.rangiffler.api.context.CookieContext;
 import org.rangiffler.api.context.SessionStorageContext;
 import org.rangiffler.jupiter.annotation.ApiLogin;
+import org.rangiffler.model.UserJson;
 import org.rangiffler.utils.OauthUtils;
 
+import java.util.Objects;
+
+import static org.apache.commons.lang3.ArrayUtils.isEmpty;
 import static org.rangiffler.config.ConfigHub.configEnv;
+
 
 public class ApiLoginExtension implements BeforeEachCallback, AfterTestExecutionCallback {
 
+    private static final GenerateUserService generateService = new GenerateUserService();
    private final AuthRestClient authRestClient = new AuthRestClient();
     private static final String JSESSIONID = "JSESSIONID";
 
@@ -22,7 +28,23 @@ public class ApiLoginExtension implements BeforeEachCallback, AfterTestExecution
     public void beforeEach(ExtensionContext context) throws Exception {
         ApiLogin annotation = context.getRequiredTestMethod().getAnnotation(ApiLogin.class);
         if (annotation != null) {
-            doLogin(annotation.username(), annotation.password());
+            String username;
+            String password;
+            if("".equals(annotation.username())||"".equals(annotation.password())) {
+                if(isEmpty(annotation.user())) {
+                throw new IllegalStateException();
+                } else {
+                    UserJson userJson = generateService.generateUser(annotation.user()[0]);
+                    username = userJson.getUsername();
+                    password  = userJson.getPassword();
+                    context.getStore(GenerateUserExtension.CREATE_USER_API).put(getTestId(context), userJson);
+                }
+            } else {
+                username = annotation.username();
+                password = annotation.password();
+            }
+
+            doLogin(username, password);
         }
     }
 
@@ -47,5 +69,11 @@ public class ApiLoginExtension implements BeforeEachCallback, AfterTestExecution
     public void afterTestExecution(ExtensionContext context) throws Exception {
         SessionStorageContext.getInstance().release();
         CookieContext.getInstance().release();
+    }
+
+    private String getTestId(ExtensionContext context) {
+        return Objects
+                .requireNonNull(context.getRequiredTestMethod().getAnnotation(AllureId.class))
+                .value();
     }
 }

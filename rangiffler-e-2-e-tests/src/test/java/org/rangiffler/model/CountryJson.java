@@ -2,6 +2,7 @@ package org.rangiffler.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import guru.qa.grpc.rangiffler.grpc.Country;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,8 +26,13 @@ public class CountryJson {
     @JsonProperty("name")
     private String name;
 
-//    public static CountryJson fromEntity(CountryEntity country) {
-//        return new CountryJson(country.getId(), country.getCode(), country.getName());
-//    }
+    public static CountryJson convertFromGrpc(Country countryGrpc) {
+        String uuidString = countryGrpc.getUuid();
+        UUID uuid = null;
+        if (uuidString != null && !uuidString.isEmpty()) {
+            uuid = UUID.fromString(uuidString);
+        }
+        return new CountryJson(uuid, countryGrpc.getCode(), countryGrpc.getName());
+    }
 
 }

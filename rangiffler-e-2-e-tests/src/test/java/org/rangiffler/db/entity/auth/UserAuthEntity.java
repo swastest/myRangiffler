@@ -2,6 +2,8 @@ package org.rangiffler.db.entity.auth;
 
 import lombok.*;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -19,7 +21,17 @@ public class UserAuthEntity {
     private Boolean accountNonExpired;
     private Boolean accountNonLocked;
     private Boolean credentialsNonExpired;
-    private List <AuthorityEntity> authorities;
+    private List<AuthorityEntity> authorities;
+
+    public UUID convertSetId(byte[] uuidFromDb) {
+        ByteBuffer byteBuffer = ByteBuffer.wrap(uuidFromDb);
+        byteBuffer.order(ByteOrder.BIG_ENDIAN);
+        long mostSignificantBits = byteBuffer.getLong();
+        long leastSignificantBits = byteBuffer.getLong();
+        UUID uuid = new UUID(mostSignificantBits, leastSignificantBits);
+        this.id = uuid;
+        return uuid;
+    }
 
     public boolean equals(Object o) {
         if (this == o) return true;

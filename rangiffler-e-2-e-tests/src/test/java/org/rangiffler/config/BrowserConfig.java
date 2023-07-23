@@ -2,7 +2,7 @@ package org.rangiffler.config;
 
 import org.aeonbits.owner.Config;
 
-@Config.Sources("classpath:config/${browser}.properties")
+@Config.Sources("classpath:config/browser.properties")
 public interface BrowserConfig extends Config {
     @Key("browser.name")
     String browserName();

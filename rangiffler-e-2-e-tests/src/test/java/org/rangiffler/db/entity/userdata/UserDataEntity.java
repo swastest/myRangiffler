@@ -2,6 +2,8 @@ package org.rangiffler.db.entity.userdata;
 
 import lombok.*;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.*;
 
 @ToString
@@ -15,6 +17,16 @@ public class UserDataEntity {
     private String firstname;
     private String lastname;
     private byte[] avatar;
+
+    public UUID convertSetId(byte[] uuidFromDb) {
+        ByteBuffer byteBuffer = ByteBuffer.wrap(uuidFromDb);
+        byteBuffer.order(ByteOrder.BIG_ENDIAN);
+        long mostSignificantBits = byteBuffer.getLong();
+        long leastSignificantBits = byteBuffer.getLong();
+        UUID uuid = new UUID(mostSignificantBits, leastSignificantBits);
+        this.id = uuid;
+        return uuid;
+    }
 
     @Override
     public boolean equals(Object o) {

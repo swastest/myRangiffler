@@ -20,9 +20,15 @@ public class UserDataDaoJdbcImpl implements UserDataDao {
         this.transactionTemplate = new TransactionTemplate(transactionManager);
         this.jdbcTemplate = new JdbcTemplate(transactionManager.getDataSource());
     }
+
     @Override
-    public int deleteUser(UserDataEntity userDataEntity) {
-        return 0;
+    public int deleteUser(UserDataEntity user) {
+        UUID userId = user.getId();
+        byte[] userIdBytes = jdbcTemplate.queryForObject("SELECT UUID_TO_BIN(?)", byte[].class, userId.toString());
+        return transactionTemplate.execute(status -> {
+            jdbcTemplate.update("DELETE FROM friends WHERE user_id =? OR friend_id =?", userIdBytes, userIdBytes);
+            return jdbcTemplate.update("DELETE FROM users WHERE id =?", userIdBytes);
+        });
     }
 
     @Override
@@ -30,9 +36,12 @@ public class UserDataDaoJdbcImpl implements UserDataDao {
         UserDataEntity user = new UserDataEntity();
         jdbcTemplate.query("SELECT * FROM users WHERE username = ?",
                 rs -> {
-                    UUID uuid = UUID.nameUUIDFromBytes((byte[]) rs.getObject("id"));
-                    user.setId(uuid);
+                    user.convertSetId((byte[]) rs.getObject("id"));
+                    user.setUsername(rs.getString("username"));
+                    user.setFirstname(rs.getString("firstname"));
+                    user.setLastname(rs.getString("lastname"));
+                    user.setAvatar(rs.getBytes("avatar"));
                 }, username);
-        return null;
+        return user;
     }
 }

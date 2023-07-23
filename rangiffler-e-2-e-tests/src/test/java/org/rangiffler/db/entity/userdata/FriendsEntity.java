@@ -3,6 +3,8 @@ package org.rangiffler.db.entity.userdata;
 import lombok.*;
 import org.hibernate.Hibernate;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.Objects;
 import java.util.UUID;
 

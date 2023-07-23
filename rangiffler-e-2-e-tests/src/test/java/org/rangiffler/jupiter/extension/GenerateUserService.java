@@ -1,43 +1,71 @@
 package org.rangiffler.jupiter.extension;
 
+import guru.qa.grpc.rangiffler.grpc.Country;
+import guru.qa.grpc.rangiffler.grpc.CountryByCodeRequest;
+import guru.qa.grpc.rangiffler.grpc.Photos;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Step;
 import org.awaitility.Awaitility;
 import org.awaitility.core.ConditionTimeoutException;
-import org.junit.jupiter.api.extension.*;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.rangiffler.api.grpc.CountryGrpcClient;
+import org.rangiffler.api.grpc.PhotoGrpcClient;
 import org.rangiffler.api.rest.AuthRestClient;
 import org.rangiffler.api.rest.UserDataRestClient;
-import org.rangiffler.db.dao.*;
-import org.rangiffler.db.entity.auth.UserAuthEntity;
-import org.rangiffler.db.entity.userdata.UserDataEntity;
 import org.rangiffler.jupiter.annotation.Friend;
 import org.rangiffler.jupiter.annotation.GenerateUser;
+import org.rangiffler.jupiter.annotation.Photo;
 import org.rangiffler.model.PhotoJson;
 import org.rangiffler.model.UserJson;
 import org.rangiffler.utils.DataUtils;
 
+import javax.annotation.Nonnull;
+
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import static org.apache.commons.lang3.ArrayUtils.isNotEmpty;
 import static org.rangiffler.utils.DataUtils.addImageByClassPath;
 
-public class GenerateUserExtension implements BeforeEachCallback, ParameterResolver, AfterEachCallback {
-    public static ExtensionContext.Namespace CREATE_USER_API = ExtensionContext.Namespace.create(GenerateUserExtension.class);
+public class GenerateUserService {
     private final AuthRestClient authRestClient = new AuthRestClient();
     private final UserDataRestClient userDataRestClient = new UserDataRestClient();
-    private static final GenerateUserService generateService = new GenerateUserService();
+    private final CountryGrpcClient countryGrpcClient = new CountryGrpcClient();
+    private final PhotoGrpcClient photoGrpcClient = new PhotoGrpcClient();
 
-    @Override
-    @Step("Create preconditions")
-    public void beforeEach(ExtensionContext context) {
-        GenerateUser annotation = context.getRequiredTestMethod()
-                .getAnnotation(GenerateUser.class);
-        if (annotation != null) {
-            UserJson userJson = generateService.generateUser(annotation);
-            context.getStore(CREATE_USER_API).put(getTestId(context), userJson);
+    public UserJson generateUser(@Nonnull GenerateUser annotation) {
+        UserJson userJson;
+        if (annotation.username().length() >= 3) {
+            userJson = doRegistration(annotation.username(), annotation.password(), annotation.password());
+        } else if (annotation.username().length() == 0) {
+            userJson = createRandomUser();
+        } else throw new IllegalArgumentException("### Username length < 3: " + annotation.username());
+        addAvatarIfPresent(annotation, userJson);
+        addFriendsIfPresent(annotation.friends(), userJson);
+        outcomeInvitationsIfPresent(annotation.outcomeInvitations(), userJson);
+        incomeInvitationsIfPresent(annotation.incomeInvitations(), userJson);
+        addPhotoIfPresent(annotation.photos(), userJson);
+        return userJson;
+    }
+
+    private void addPhotoIfPresent(Photo[] photos, UserJson targetUser) {
+        if(isNotEmpty(photos)) {
+            Photos.Builder builder = Photos.newBuilder();
+            for(Photo photo: photos) {
+                CountryByCodeRequest req = CountryByCodeRequest.newBuilder()
+                        .setCode(photo.countryCode())
+                        .build();
+                Country country = countryGrpcClient.getCountryByCode(req);
+                guru.qa.grpc.rangiffler.grpc.Photo reqOnePhoto = guru.qa.grpc.rangiffler.grpc.Photo.newBuilder()
+                        .setUsername(targetUser.getUsername())
+                        .setPhoto(addImageByClassPath(photo.photoPath()))
+                        .setDescription(photo.description())
+                        .setCountry(country)
+                        .build();
+                builder.addPhotos(reqOnePhoto);
+                guru.qa.grpc.rangiffler.grpc.Photo resp = photoGrpcClient.addPhoto(reqOnePhoto);
+                targetUser.getPhotos().add(PhotoJson.convertFromGrpc(resp));
+            }
         }
     }
 
@@ -87,52 +115,6 @@ public class GenerateUserExtension implements BeforeEachCallback, ParameterResol
         userJson = doRegistration(username, password, password);
 
         return userJson;
-    }
-
-    @Override
-    public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        return parameterContext.getParameter().getType().isAssignableFrom(UserJson.class);
-    }
-
-    @Override
-    public UserJson resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        return extensionContext.getStore(CREATE_USER_API).get(getTestId(extensionContext), UserJson.class);
-    }
-
-    @Override
-    @Step("Remove test data")
-    public void afterEach(ExtensionContext context) {
-        UserJson userJson = context.getStore(CREATE_USER_API).get(getTestId(context), UserJson.class);
-        if (userJson != null) {
-            UserAuthDao authDao = new UserAuthDaoJdbcImpl();
-            UserAuthEntity user = authDao.userInfo(userJson.getUsername());
-            authDao.deleteUser(user);
-            UserDataDao userdataDao = new UserDataDaoJdbcImpl();
-            UserDataEntity userdata = userdataDao.userInfoByUserName(userJson.getUsername());
-            userdataDao.deleteUser(userdata);
-            if (!userJson.getFriends().isEmpty() || !userJson.getIncomeInvitations().isEmpty()
-                    || !userJson.getOutcomeInvitations().isEmpty()) {
-                List<UserJson> friends = new ArrayList<>();
-                friends.addAll(userJson.getFriends());
-                friends.addAll(userJson.getIncomeInvitations());
-                friends.addAll(userJson.getOutcomeInvitations());
-                for (UserJson friend : friends) {
-                    UserAuthEntity userFriend = authDao.userInfo(friend.getUsername());
-                    authDao.deleteUser(userFriend);
-                    UserDataEntity userdataFriend = userdataDao.userInfoByUserName(friend.getUsername());
-                    userdataDao.deleteUser(userdataFriend);
-                }
-            }
-
-            if (!userJson.getPhotos().isEmpty()) {
-                PhotoDao photoDao = new PhotoDaoJdbcImpl();
-                List<PhotoJson> photoJsons = userJson.getPhotos();
-                for (PhotoJson photo : photoJsons) {
-                    photoDao.deleteAllPhotoByUsername(photo.getUsername());
-                }
-            }
-
-        }
     }
 
     @Step("Create new user")

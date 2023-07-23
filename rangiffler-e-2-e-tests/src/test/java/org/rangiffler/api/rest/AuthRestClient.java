@@ -1,11 +1,12 @@
-package org.rangiffler.api;
+package org.rangiffler.api.rest;
 
 
 import org.rangiffler.api.context.CookieContext;
 import org.rangiffler.api.context.SessionStorageContext;
-import org.rangiffler.api.interceptor.AddCookiesInterceptor;
-import org.rangiffler.api.interceptor.RecievedCodeInterceptor;
-import org.rangiffler.api.interceptor.RecievedCookiesInterceptor;
+import org.rangiffler.api.rest.interceptor.AddCookiesInterceptor;
+import org.rangiffler.api.rest.interceptor.RecievedCodeInterceptor;
+import org.rangiffler.api.rest.interceptor.RecievedCookiesInterceptor;
+import retrofit2.Response;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -83,13 +84,14 @@ public class AuthRestClient extends BaseRestClient {
     public void doRegistration(String username, String password, String passwordSubmit) {
         final CookieContext cookieContext = CookieContext.getInstance();
         try {
-            authService.doRegistration(
+            Response<Void> response = authService.doRegistration(
                     cookieContext.getFormattedCookie("XSRF-TOKEN"),
                     cookieContext.getCookie("XSRF-TOKEN"),
                     username,
                     password,
                     passwordSubmit
             ).execute();
+//            Assertions.assertEquals(201, response.code());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
