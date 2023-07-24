@@ -60,6 +60,7 @@ public class GrpcPhotoService extends RangifflerPhotoServiceGrpc.RangifflerPhoto
     public void editPhoto(Photo request, StreamObserver<Photo> responseObserver) {
         Country countryInfo = getCountryInfoByCode(request.getCountry().getCode());
         PhotoEntity editPhoto = new PhotoEntity();
+        editPhoto.setId(UUID.fromString(request.getId()));
         editPhoto.setPhoto(request.getPhoto().getBytes(StandardCharsets.UTF_8));
         editPhoto.setCountryCode(request.getCountry().getCode());
         editPhoto.setUsername(request.getUsername());

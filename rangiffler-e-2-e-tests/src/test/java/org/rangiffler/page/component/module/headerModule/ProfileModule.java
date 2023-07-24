@@ -1,8 +1,7 @@
-package org.rangiffler.page.component.headerModule;
+package org.rangiffler.page.component.module.headerModule;
 
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import org.apache.kafka.common.protocol.types.Field;
 import org.rangiffler.page.component.UserHeader;
 
 import static com.codeborne.selenide.Condition.text;
@@ -29,12 +28,6 @@ public class ProfileModule extends UserHeader {
         return this;
     }
 
-//    @Step("Click [Save] button")
-//    public MainPage clickSave() {
-//        submitButton.click();
-//        return new MainPage();
-//    }
-
     @Step("Check firstname in profile: {0}")
     public ProfileModule firstnameShouldBe(String firstname) {
         firstnameInput.shouldHave(value(firstname));
@@ -53,9 +46,4 @@ public class ProfileModule extends UserHeader {
         return this;
     }
 
-//    @Step("Check avatar")
-//    public ProfileModule checkAvatar(final String avatar) {
-//        $(".MuiAvatar-img").shouldHave(PhotoCondition.photo(avatar), ofSeconds(15L));
-//        return this;
-//    }
 }

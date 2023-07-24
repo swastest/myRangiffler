@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import java.time.Duration;
 
 import static org.apache.commons.lang3.ArrayUtils.isNotEmpty;
-import static org.rangiffler.utils.DataUtils.addImageByClassPath;
+import static org.rangiffler.utils.DataUtils.convertImage;
 
 public class GenerateUserService {
     private final AuthRestClient authRestClient = new AuthRestClient();
@@ -54,7 +54,7 @@ public class GenerateUserService {
                 Country country = countryGrpcClient.getCountryByCode(req);
                 guru.qa.grpc.rangiffler.grpc.Photo reqOnePhoto = guru.qa.grpc.rangiffler.grpc.Photo.newBuilder()
                         .setUsername(targetUser.getUsername())
-                        .setPhoto(addImageByClassPath(photo.photoPath()))
+                        .setPhoto(convertImage(photo.photoPath()))
                         .setDescription(photo.description())
                         .setCountry(country)
                         .build();
@@ -68,7 +68,7 @@ public class GenerateUserService {
     private void addAvatarIfPresent(GenerateUser annotation, UserJson userJson) {
 
         if (annotation.avatarPath().length() != 0) {
-            userJson.setAvatar(addImageByClassPath(annotation.avatarPath()));
+            userJson.setAvatar(convertImage(annotation.avatarPath()));
             userDataRestClient.updateUser(userJson);
         }
     }

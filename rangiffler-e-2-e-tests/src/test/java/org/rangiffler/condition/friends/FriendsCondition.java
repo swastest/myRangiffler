@@ -24,9 +24,9 @@ public class FriendsCondition {
                     ElementNotFound elementNotFound = new ElementNotFound(collection, List.of("Can`t find elements"), lastError);
                     throw elementNotFound;
                 } else if (elements.size() != expectedFriends.length) {
-                    throw new FriendsSizeMismatch(collection, Arrays.asList(expectedFriends), bindElementsToSpends(elements), explanation, timeoutMs);
+                    throw new FriendsSizeMismatch(collection, Arrays.asList(expectedFriends), bindElementsToFriends(elements), explanation, timeoutMs);
                 } else {
-                    throw new FriendsMismatch(collection, Arrays.asList(expectedFriends), bindElementsToSpends(elements), explanation, timeoutMs);
+                    throw new FriendsMismatch(collection, Arrays.asList(expectedFriends), bindElementsToFriends(elements), explanation, timeoutMs);
                 }
             }
 
@@ -52,7 +52,7 @@ public class FriendsCondition {
                 return true;
             }
 
-            private List<UserJson> bindElementsToSpends(List<WebElement> elements) {
+            private List<UserJson> bindElementsToFriends(List<WebElement> elements) {
                 return elements.stream()
                         .map(e -> {
                             List<WebElement> cells = e.findElements(By.cssSelector("td"));

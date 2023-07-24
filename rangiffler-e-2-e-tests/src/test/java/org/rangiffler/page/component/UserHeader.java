@@ -3,8 +3,9 @@ package org.rangiffler.page.component;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import org.rangiffler.page.component.headerModule.FriendsModule;
-import org.rangiffler.page.component.headerModule.ProfileModule;
+import org.rangiffler.page.TravelsPage;
+import org.rangiffler.page.component.module.headerModule.FriendsModule;
+import org.rangiffler.page.component.module.headerModule.ProfileModule;
 
 import static com.codeborne.selenide.Selectors.byTagName;
 import static com.codeborne.selenide.Selectors.byText;
@@ -20,18 +21,18 @@ public class UserHeader extends BaseComponent<UserHeader> {
     private final SelenideElement profileIcon = self.$(".MuiAvatar-circular");
     private final SelenideElement friendsIcon = self.$("div[aria-label='Your friends']");
 
-    @Step("Click on button [Add photo]")
+    @Step("Click Add photo button Add photo: {0}")
     public UserHeader addPhoto(String resource) {
         addPhotoButton.click();
         $("#file").uploadFromClasspath(resource);
         return this;
     }
 
-//    @Step("Click on button [Save photo]")
-//    public MainPage savePhoto() {
-//        $("button[type='submit']").click();
-//        return new MainPage();
-//    }
+    @Step("Click Save photo button")
+    public TravelsPage savePhoto() {
+        $("button[type='submit']").click();
+        return new TravelsPage();
+    }
 
     @Step("Set description: {0}")
     public UserHeader setPhotoDescription(String description) {
@@ -58,13 +59,7 @@ public class UserHeader extends BaseComponent<UserHeader> {
         profileIcon.click();
         return new ProfileModule();
     }
-//
-//    @Step("Set avatar from path: {0}")
-//    public ProfileModule setAvatar(String path) {
-//        $("input[type='file']").uploadFromClasspath(path);
-//        return new ProfileModule();
-//    }
-//
+
     @Step("Go to user friends")
     public FriendsModule toFriends() {
         friendsIcon.click();

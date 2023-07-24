@@ -26,7 +26,7 @@ public class DataUtils {
         return faker.name().lastName();
     }
 
-    public static String addImageByClassPath(String imageClasspath) {
+    public static String convertImage(String imageClasspath) {
         ClassLoader classLoader = DataUtils.class.getClassLoader();
         try (InputStream is = classLoader.getResourceAsStream(imageClasspath)) {
             assert is != null;

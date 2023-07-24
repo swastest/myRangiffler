@@ -1,6 +1,9 @@
 package org.rangiffler.test.web;
 
 import io.qameta.allure.AllureId;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import org.rangiffler.jupiter.annotation.ApiLogin;
 import org.rangiffler.jupiter.annotation.Friend;
@@ -9,18 +12,24 @@ import org.rangiffler.jupiter.annotation.Photo;
 import org.rangiffler.model.FriendStatus;
 import org.rangiffler.model.UserJson;
 
+import static org.rangiffler.utils.testDoc.TestTag.*;
+
+@DisplayName("WEB: Friends")
 public class FriendsTest extends BaseWebTest {
+
+    @Test
+    @AllureId("2001")
+    @Tags({@Tag(WEB), @Tag(POSITIVE), @Tag(USERS)})
     @ApiLogin(
             user = @GenerateUser(
                     incomeInvitations = @Friend,
-                    avatarPath = "Images/img1.jpeg",
+                    avatarPath = "images/img1.jpeg",
                     photos = @Photo(
-                            photoPath = "Images/img3.jpeg"
+                            photoPath = "images/img3.jpeg"
                     )
             )
     )
-    @Test
-    @AllureId("2001")
+    @DisplayName("incomeInvitations is visible")
     void incomeInvitationsTest(UserJson userJson) {
         UserJson friend = userJson.getIncomeInvitations().get(0);
         yourTravelsPage.openTravelsPage(tabs)
@@ -28,17 +37,19 @@ public class FriendsTest extends BaseWebTest {
                 .checkPeopleAround(friend, FriendStatus.INVITATION_RECEIVED);
     }
 
+    @Test
+    @AllureId("2002")
+    @Tags({@Tag(WEB), @Tag(POSITIVE), @Tag(USERS)})
     @ApiLogin(
             user = @GenerateUser(
                     outcomeInvitations = @Friend,
-                    avatarPath = "Images/img4.png",
+                    avatarPath = "images/img4.png",
                     photos = @Photo(
-                            photoPath = "Images/img3.jpeg"
+                            photoPath = "images/img3.jpeg"
                     )
             )
     )
-    @Test
-    @AllureId("2002")
+    @DisplayName("outcomeInvitations is visible")
     void outcomeInvitationsTest(UserJson userJson) {
         UserJson friend = userJson.getOutcomeInvitations().get(0);
         yourTravelsPage.openTravelsPage(tabs)
@@ -46,17 +57,19 @@ public class FriendsTest extends BaseWebTest {
                 .checkPeopleAround(friend, FriendStatus.INVITATION_SENT);
     }
 
+    @Test
+    @AllureId("2003")
+    @Tags({@Tag(WEB), @Tag(POSITIVE), @Tag(USERS)})
     @ApiLogin(
             user = @GenerateUser(
                     friends = @Friend,
-                    avatarPath = "Images/img2.jpeg",
+                    avatarPath = "images/img2.jpeg",
                     photos = @Photo(
-                            photoPath = "Images/img3.jpeg"
+                            photoPath = "images/img3.jpeg"
                     )
             )
     )
-    @Test
-    @AllureId("2003")
+    @DisplayName("friends is visible")
     void friendsTest(UserJson userJson) {
         UserJson friend = userJson.getFriends().get(0);
         yourTravelsPage.openTravelsPage(tabs)
@@ -64,17 +77,19 @@ public class FriendsTest extends BaseWebTest {
                 .checkPeopleAround(friend, FriendStatus.FRIEND);
     }
 
+    @Test
+    @AllureId("2004")
+    @Tags({@Tag(WEB), @Tag(POSITIVE), @Tag(USERS)})
     @ApiLogin(
             user = @GenerateUser(
                     friends = @Friend,
-                    avatarPath = "Images/img2.jpeg",
+                    avatarPath = "images/img2.jpeg",
                     photos = @Photo(
-                            photoPath = "Images/img3.jpeg"
+                            photoPath = "images/img3.jpeg"
                     )
             )
     )
-    @Test
-    @AllureId("2004")
+    @DisplayName("friends is visible")
     void friendsTableTest(UserJson userJson) {
         UserJson friend = userJson.getFriends().get(0);
         yourTravelsPage.openTravelsPage(header)

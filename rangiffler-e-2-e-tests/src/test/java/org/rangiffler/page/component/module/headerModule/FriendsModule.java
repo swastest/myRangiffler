@@ -1,4 +1,4 @@
-package org.rangiffler.page.component.headerModule;
+package org.rangiffler.page.component.module.headerModule;
 
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;

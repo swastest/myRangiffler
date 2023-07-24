@@ -8,7 +8,6 @@ import org.rangiffler.utils.ErrorMessage;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.WebDriverConditions.url;
 import static org.rangiffler.config.ConfigHub.configEnv;
 
 public class RegisterPage extends BasePage<RegisterPage> {
@@ -47,11 +46,6 @@ public class RegisterPage extends BasePage<RegisterPage> {
         return Selenide.open(URL, RegisterPage.class);
     }
 
-    @Step("Should stay on 'Register page'")
-    public RegisterPage shouldStayOnRegisterPage() {
-        Selenide.webdriver().shouldHave(url(URL));
-        return this;
-    }
 
     @Step("Go to user login")
     public LoginPage toLogin() {
@@ -59,8 +53,8 @@ public class RegisterPage extends BasePage<RegisterPage> {
         return new LoginPage();
     }
 
-    @Step("Check error message with text: {0}")
-    public RegisterPage errorShouldAppear(ErrorMessage errorText) {
+    @Step("Check error message: {0}")
+    public RegisterPage checkError(ErrorMessage errorText) {
         $(".form__error").shouldHave(text(errorText.content));
         return this;
     }

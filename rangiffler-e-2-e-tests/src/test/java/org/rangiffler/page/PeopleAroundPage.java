@@ -3,6 +3,7 @@ package org.rangiffler.page;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.rangiffler.model.FriendStatus;
 import org.rangiffler.model.UserJson;
 
@@ -20,6 +21,7 @@ public class PeopleAroundPage extends BasePage<PeopleAroundPage> {
         return this;
     }
 
+    @Step("Check friendStatus")
     public PeopleAroundPage checkPeopleAround(UserJson friend, FriendStatus status) {
         SelenideElement result = peopleTable.filter(Condition.text(friend.getUsername()))
                 .shouldHave(sizeGreaterThan(0)).get(0);
