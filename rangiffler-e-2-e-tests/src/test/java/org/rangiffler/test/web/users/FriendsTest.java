@@ -1,4 +1,4 @@
-package org.rangiffler.test.web;
+package org.rangiffler.test.web.users;
 
 import io.qameta.allure.AllureId;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +11,7 @@ import org.rangiffler.jupiter.annotation.GenerateUser;
 import org.rangiffler.jupiter.annotation.Photo;
 import org.rangiffler.model.FriendStatus;
 import org.rangiffler.model.UserJson;
+import org.rangiffler.test.web.BaseWebTest;
 
 import static org.rangiffler.utils.testDoc.TestTag.*;
 

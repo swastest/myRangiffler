@@ -1,4 +1,4 @@
-package org.rangiffler.test.web;
+package org.rangiffler.test.web.auth;
 
 import io.qameta.allure.AllureId;
 import org.junit.jupiter.api.DisplayName;
@@ -9,6 +9,7 @@ import org.rangiffler.jupiter.annotation.GenerateUser;
 import org.rangiffler.model.UserJson;
 import org.rangiffler.page.LoginPage;
 import org.rangiffler.page.component.UserHeader;
+import org.rangiffler.test.web.BaseWebTest;
 import org.rangiffler.utils.DataUtils;
 import org.rangiffler.utils.ErrorMessage;
 

@@ -35,4 +35,11 @@ public class CountryJson {
         return new CountryJson(uuid, countryGrpc.getCode(), countryGrpc.getName());
     }
 
+    public Country convertToGrpc() {
+        return Country.newBuilder().setCode(code)
+                .setUuid(id != null ? id.toString() : "")
+                .setName(name)
+                .build();
+    }
+
 }

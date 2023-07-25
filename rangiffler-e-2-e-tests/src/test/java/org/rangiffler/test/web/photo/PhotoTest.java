@@ -1,4 +1,4 @@
-package org.rangiffler.test.web;
+package org.rangiffler.test.web.photo;
 
 import io.qameta.allure.AllureId;
 import org.junit.jupiter.api.DisplayName;
@@ -12,12 +12,13 @@ import org.rangiffler.jupiter.annotation.Friend;
 import org.rangiffler.jupiter.annotation.GenerateUser;
 import org.rangiffler.jupiter.annotation.Photo;
 import org.rangiffler.model.UserJson;
+import org.rangiffler.test.web.BaseWebTest;
 
 import static org.rangiffler.utils.DataUtils.convertImage;
 import static org.rangiffler.utils.testDoc.TestTag.*;
 
 @DisplayName("WEB: Photo")
-public class PhotoTest extends BaseWebTest{
+public class PhotoTest extends BaseWebTest {
 
     @Test
     @AllureId("3001")

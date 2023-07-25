@@ -1,10 +1,11 @@
 package org.rangiffler.utils.testDoc;
 
-import org.apache.kafka.common.protocol.types.Field;
-
 public interface TestTag {
     String API = "api";
     String WEB = "web";
+
+    String REST = "rest";
+    String GRPC = "grpc";
 
     String AUTH = "auth";
     String USERS = "users";

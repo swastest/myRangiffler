@@ -35,4 +35,14 @@ public class PhotoJson {
                 .username(photoGrpc.getUsername())
                 .build();
     }
+
+    public Photo convertToGrpc() {
+        return Photo.newBuilder()
+                .setId(id != null ? id.toString() : "")
+                .setUsername(username)
+                .setDescription(description)
+                .setPhoto(photo)
+                .setCountry(countryJson.convertToGrpc())
+                .build();
+    }
 }

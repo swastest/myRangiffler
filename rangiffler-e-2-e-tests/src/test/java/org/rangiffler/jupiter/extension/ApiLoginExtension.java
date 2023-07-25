@@ -1,6 +1,7 @@
 package org.rangiffler.jupiter.extension;
 
 import com.codeborne.selenide.Selenide;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -45,6 +46,7 @@ public class ApiLoginExtension  extends BaseExtension implements BeforeEachCallb
         }
     }
 
+    @Step("Authorization: username= {0}, password= {1} ")
     private void doLogin(String username, String password) {
         final SessionStorageContext sessionStorageContext = SessionStorageContext.getInstance();
 

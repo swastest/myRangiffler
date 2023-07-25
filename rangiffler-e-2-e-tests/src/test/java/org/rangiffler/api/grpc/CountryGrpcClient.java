@@ -1,5 +1,7 @@
 package org.rangiffler.api.grpc;
 
+import com.google.protobuf.Empty;
+import guru.qa.grpc.rangiffler.grpc.Countries;
 import guru.qa.grpc.rangiffler.grpc.Country;
 import guru.qa.grpc.rangiffler.grpc.CountryByCodeRequest;
 import guru.qa.grpc.rangiffler.grpc.RangifflerCountriesServiceGrpc;
@@ -13,7 +15,14 @@ public class CountryGrpcClient extends GrpcBaseClient {
         geoBlockingStub = RangifflerCountriesServiceGrpc.newBlockingStub(channel);
     }
 
-    public Country getCountryByCode(CountryByCodeRequest request) {
-       return geoBlockingStub.getCountriesByCode(request);
+    public Country getCountryByCode(String countryCode) {
+        CountryByCodeRequest req = CountryByCodeRequest.newBuilder()
+                .setCode(countryCode)
+                .build();
+       return geoBlockingStub.getCountriesByCode(req);
+    }
+
+    public Countries getAllCountries() {
+        return geoBlockingStub.getCountries(Empty.getDefaultInstance());
     }
 }

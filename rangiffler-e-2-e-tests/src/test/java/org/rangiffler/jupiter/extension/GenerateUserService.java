@@ -44,14 +44,12 @@ public class GenerateUserService {
         return userJson;
     }
 
+    @Step("Add photo for user {1}")
     private void addPhotoIfPresent(Photo[] photos, UserJson targetUser) {
         if (isNotEmpty(photos)) {
             Photos.Builder builder = Photos.newBuilder();
             for (Photo photo : photos) {
-                CountryByCodeRequest req = CountryByCodeRequest.newBuilder()
-                        .setCode(photo.countryCode())
-                        .build();
-                Country country = countryGrpcClient.getCountryByCode(req);
+                Country country = countryGrpcClient.getCountryByCode(photo.countryCode());
                 guru.qa.grpc.rangiffler.grpc.Photo reqOnePhoto = guru.qa.grpc.rangiffler.grpc.Photo.newBuilder()
                         .setUsername(targetUser.getUsername())
                         .setPhoto(convertImage(photo.photoPath()))
@@ -65,6 +63,7 @@ public class GenerateUserService {
         }
     }
 
+    @Step("Add avatar for user {1}")
     private void addAvatarIfPresent(GenerateUser annotation, UserJson userJson) {
 
         if (annotation.avatarPath().length() != 0) {
@@ -73,6 +72,7 @@ public class GenerateUserService {
         }
     }
 
+    @Step("Income friend invitation ")
     private void incomeInvitationsIfPresent(Friend[] incomeInvitations, UserJson targetUser) {
         if (isNotEmpty(incomeInvitations)) {
             for (Friend friend : incomeInvitations) {
@@ -84,6 +84,7 @@ public class GenerateUserService {
         }
     }
 
+    @Step("Add friend")
     private void addFriendsIfPresent(Friend[] friends, UserJson targetUser) {
         if (isNotEmpty(friends)) {
             for (Friend friend : friends) {
@@ -96,6 +97,7 @@ public class GenerateUserService {
         }
     }
 
+    @Step("outcome friend invitation")
     private void outcomeInvitationsIfPresent(Friend[] outcomeInvitations, UserJson targetUser) {
         if (isNotEmpty(outcomeInvitations)) {
             for (Friend friend : outcomeInvitations) {
@@ -115,7 +117,7 @@ public class GenerateUserService {
         return userJson;
     }
 
-    @Step("Create new user")
+    @Step("Registration new user. username= {0}, password= {1}")
     private UserJson doRegistration(String username, String password, String submitPassword) {
         authRestClient.getRegistrationToken();
         authRestClient.doRegistration(username, password, submitPassword);
