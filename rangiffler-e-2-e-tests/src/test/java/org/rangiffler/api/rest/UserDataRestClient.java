@@ -7,6 +7,7 @@ import org.rangiffler.model.UserJson;
 import org.springframework.lang.NonNull;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.rangiffler.config.ConfigHub.configEnv;
 
@@ -21,7 +22,7 @@ public class UserDataRestClient extends BaseRestClient {
         try {
             return userDataService.currentUser(username).execute().body();
         } catch (IOException e) {
-            Assertions.fail("unsuccessful connection to the service niffler-userData "+e.getMessage());
+            Assertions.fail("unsuccessful connection to the service niffler-userData " + e.getMessage());
             return null;
         }
     }
@@ -32,7 +33,7 @@ public class UserDataRestClient extends BaseRestClient {
             friendJson.setUsername(friendUsername);
             return userDataService.sendInviteFriend(username, friendJson).execute().body();
         } catch (IOException e) {
-            Assertions.fail("unsuccessful connection to the service niffler-userData "+e.getMessage());
+            Assertions.fail("unsuccessful connection to the service niffler-userData " + e.getMessage());
             return null;
         }
     }
@@ -43,7 +44,7 @@ public class UserDataRestClient extends BaseRestClient {
             friendJson.setUsername(inviteUsername);
             return userDataService.acceptInvitation(username, friendJson).execute().body();
         } catch (IOException e) {
-            Assertions.fail("unsuccessful connection to the service niffler-userData "+e.getMessage());
+            Assertions.fail("unsuccessful connection to the service niffler-userData " + e.getMessage());
             return null;
         }
     }
@@ -52,9 +53,17 @@ public class UserDataRestClient extends BaseRestClient {
         try {
             return userDataService.updateUser(userJson).execute().body();
         } catch (IOException e) {
-            Assertions.fail("unsuccessful connection to the service niffler-userData "+e.getMessage());
+            Assertions.fail("unsuccessful connection to the service niffler-userData " + e.getMessage());
             return null;
         }
     }
 
+    public List<UserJson> getAllUsers(String username) {
+        try {
+            return userDataService.getAllUsers(username).execute().body();
+        } catch (IOException e) {
+            Assertions.fail("unsuccessful connection to the service niffler-userData " + e.getMessage());
+            return null;
+        }
+    }
 }

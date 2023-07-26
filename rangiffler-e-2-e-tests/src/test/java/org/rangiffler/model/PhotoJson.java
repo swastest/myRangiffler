@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Data
@@ -44,5 +45,18 @@ public class PhotoJson {
                 .setPhoto(photo)
                 .setCountry(countryJson.convertToGrpc())
                 .build();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PhotoJson photoJson = (PhotoJson) o;
+        return Objects.equals(countryJson, photoJson.countryJson) && Objects.equals(photo, photoJson.photo) && Objects.equals(description, photoJson.description) && Objects.equals(username, photoJson.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(countryJson, photo, description, username);
     }
 }

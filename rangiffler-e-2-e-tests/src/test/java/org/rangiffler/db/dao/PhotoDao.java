@@ -2,9 +2,7 @@ package org.rangiffler.db.dao;
 
 import org.rangiffler.db.entity.photo.PhotoEntity;
 
-import java.util.List;
-
 public interface PhotoDao {
-    List<PhotoEntity> findAllPhotoByUsername(String username);
+    PhotoEntity findPhotoByUsername(String username);
     void deleteAllPhotoByUsername(String username);
 }

@@ -6,6 +6,8 @@ import org.rangiffler.model.UserJson;
 import retrofit2.Call;
 import retrofit2.http.*;
 
+import java.util.List;
+
 public interface UserDataService {
     @GET("/currentUser")
     Call<UserJson> currentUser(
@@ -27,6 +29,11 @@ public interface UserDataService {
     @PATCH("/updateUserInfo")
     Call<UserJson> updateUser(
             @Body UserJson userJson
+    );
+
+    @GET("/allUsers")
+    Call<List<UserJson>> getAllUsers(
+            @Query("username") String username
     );
 
 }

@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @ExtendWith({AllureJunit5.class})
-public @interface ApiTest {
+public @interface RestTest {
 
 }

@@ -1,7 +1,6 @@
 package org.rangiffler.test.api.grpc.geo;
 
 
-import com.google.protobuf.Empty;
 import guru.qa.grpc.rangiffler.grpc.Countries;
 import guru.qa.grpc.rangiffler.grpc.Country;
 import io.qameta.allure.AllureId;
@@ -11,7 +10,7 @@ import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.rangiffler.test.api.grpc.BaseGrpcTest;
+import org.rangiffler.test.api.BaseGrpcTest;
 
 import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.assertEquals;

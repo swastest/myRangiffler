@@ -3,10 +3,8 @@ package org.rangiffler.db.dao;
 import org.rangiffler.db.entity.photo.PhotoEntity;
 import org.rangiffler.db.managerDb.DataSourceProviderMySql;
 import org.rangiffler.db.managerDb.ServiceDB;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PhotoDaoJdbcImpl implements PhotoDao {
     private final JdbcTemplate jdbcTemplate;
@@ -16,20 +14,21 @@ public class PhotoDaoJdbcImpl implements PhotoDao {
     }
 
     @Override
-    public List<PhotoEntity> findAllPhotoByUsername(String username) {
-        List<PhotoEntity> photos = new ArrayList<>();
-        jdbcTemplate.query("SELECT * FROM photos WHERE username =?", rs -> {
-            while (rs.next()) {
+    public PhotoEntity findPhotoByUsername(String username) {
+        String sql = "SELECT * FROM photos WHERE username = ?";
+        try {
+            return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
                 PhotoEntity photo = new PhotoEntity();
                 photo.convertSetId((byte[]) rs.getObject("id"));
                 photo.setUsername(rs.getString("username"));
                 photo.setCountryCode(rs.getString("country_code"));
                 photo.setDescription(rs.getString("description"));
                 photo.setPhoto(rs.getBytes("photo"));
-                photos.add(photo);
-            }
-        }, username);
-        return photos;
+                return photo;
+            }, username);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
