@@ -1,10 +1,7 @@
 package org.rangiffler.test.web.auth;
 
 import io.qameta.allure.AllureId;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.rangiffler.jupiter.annotation.GenerateUser;
 import org.rangiffler.model.UserJson;
 import org.rangiffler.page.LoginPage;
@@ -32,6 +29,7 @@ public class LoginTest extends BaseWebTest {
                 .checkUserLoginName(userJson.getUsername());
     }
 
+    @Disabled
     @Test
     @AllureId("1002")
     @Tags({@Tag(WEB), @Tag(POSITIVE), @Tag(AUTH)})

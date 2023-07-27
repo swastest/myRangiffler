@@ -30,5 +30,7 @@ public interface TestEnvConfig extends Config {
     String dbLogin();
     @Key("db.password")
     String dbPassword();
+    @Key("kafka.address")
+    String kafkaAddress();
 
 }
