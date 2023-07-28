@@ -24,11 +24,4 @@ public class PhotoEntity {
     @Column(columnDefinition = "bytea")
     private byte[] photo;
 
-//    public void setPhoto(byte[] photo) {
-//        this.photo = photo;
-//    }
-//
-//    public void setCountryCode(String countryCode) {
-//        this.countryCode = countryCode;
-//    }
 }
