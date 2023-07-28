@@ -1,4 +1,7 @@
-![](img/img2.jpeg)
+
+## **Rangiffler**
+
+![App](../img/img3.jpeg)
 
 ## **Технологии, использованные в Rangiffler**
 
@@ -220,3 +223,4 @@ MacBook-Pro  niffler % bash docker-compose-e2e.sh
 
 
 # Пример отчета Allure 
+![Allure result](../img/allure.png)
