@@ -108,7 +108,7 @@ MacBook-Pro niffler % cd rangiffler-client
 
 ```posh
 MacBook-Pro niffler-frontend % npm i
-MacBook-Pro niffler-frontend % npm run build:dev
+MacBook-Pro niffler-frontend % npm start
 ```
 
 #### 3. Прописать run конфигурацию для всех сервисов niffler-* - Active profiles local

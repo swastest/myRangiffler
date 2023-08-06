@@ -52,8 +52,8 @@ public class AuthProducerConfiguration {
     @Primary
     public NewTopic topic() {
         return TopicBuilder.name("users")
-                .partitions(1)
-                .replicas(1)
+                .partitions(2)
+                .replicas(2)
                 .build();
     }
 }
