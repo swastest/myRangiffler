@@ -1,0 +1,15 @@
+name: Update View Counter
+
+on:
+  workflow_run:
+    workflows: ["Update View Counter"]
+    types:
+      - completed
+
+jobs:
+  update-views:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update Views Count
+        run: |
+          curl -X POST https://api.countapi.xyz/hit/https://github.com/swastest/myRangiffler/views
