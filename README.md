@@ -228,3 +228,5 @@ MacBook-Pro  niffler % bash docker-compose-e2e.sh
 - [Allure-docker-service](https://github.com/fescobar/allure-docker-service)
 - [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 - [Gradle 7.6](https://docs.gradle.org/7.6/release-notes.html)
+
+![Views](https://img.shields.io/endpoint?url=https://api.countapi.xyz/get/https://github.com/swastest/myRangiffler/views)
