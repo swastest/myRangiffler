@@ -1,6 +1,8 @@
 package org.rangiffler.db.managerDb;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
+import com.p6spy.engine.spy.P6DataSource;
+import com.p6spy.engine.spy.P6SpyDriver;
 
 import javax.sql.DataSource;
 import java.util.Map;
@@ -17,7 +19,8 @@ public enum DataSourceProviderMySql {
             mySqlDataSource.setUrl(service.getJdbcUrl());
             mySqlDataSource.setUser(configEnv.dbLogin());
             mySqlDataSource.setPassword(configEnv.dbPassword());
-            return mySqlDataSource;
+            P6DataSource driver = new P6DataSource(mySqlDataSource); // обертка
+            return driver;
         });
     }
 }

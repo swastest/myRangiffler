@@ -1,6 +1,7 @@
 package org.rangiffler.test.web;
 
 import guru.qa.grpc.rangiffler.grpc.CountryByCodeRequest;
+import org.rangiffler.allure.utils.annotation.Logger;
 import org.rangiffler.jupiter.annotation.WebTest;
 import org.rangiffler.page.LandingPage;
 import org.rangiffler.page.LoginPage;
@@ -9,6 +10,7 @@ import org.rangiffler.page.TravelsPage;
 import org.rangiffler.page.component.MainNavigationTabs;
 import org.rangiffler.page.component.UserHeader;
 
+@Logger
 @WebTest
 public abstract class BaseWebTest {
     protected LandingPage landingPage = new LandingPage();

@@ -59,6 +59,7 @@ dependencies {
     testImplementation "io.qameta.allure:allure-okhttp3:${allureVersion}"
     testImplementation "io.qameta.allure:allure-selenide:${allureVersion}"
     testImplementation "io.qameta.allure:allure-grpc:${allureVersion}"
+    testImplementation 'ch.qos.logback:logback-classic:1.4.11'
     // WEB
     testImplementation "com.codeborne:selenide:${selenideVersion}"
     // Utils
